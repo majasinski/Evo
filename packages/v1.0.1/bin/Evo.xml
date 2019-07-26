@@ -1,0 +1,846 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Evo</name>
+    </assembly>
+    <members>
+        <member name="T:GeneticAlgorithms.Chromosomes">
+            <summary>
+            Includes methods responsible for definition of chromosome (candidate solution) patterns.
+            Physical solutions are created by passing a pattern to the <see cref="T:GeneticAlgorithms.Populations"/> class.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome(System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Double})">
+            <summary>
+            Creates a pattern of a floating point candidate solution.
+            </summary>
+            <param name="minValue">Minimum value of the solution or, in case of multi-variable problem, a list of minimum values.</param>
+            <param name="maxValue">Maximum value of the solution or, in case of multi-variable problem, a list of maximum values.</param>
+            <param name="totalBits">Number of bits for the solution or, in case of multi-variable problem, a list of bits numbers.</param>
+            <param name="fractionDigits">Number of fraction digits of the solution or, in case of multi-variable problem, a list of fraction digit numbers.</param>
+            <returns name="chromosome">
+            A pattern of a floating point candidate solution. Default values of total bits of 32 and fraction digits of 3 are used.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome(System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Creates a pattern of a floating point candidate solution.
+            </summary>
+            <param name="minValue">Minimum value of the solution or, in case of multi-variable problem, a list of minimum values.</param>
+            <param name="maxValue">Maximum value of the solution or, in case of multi-variable problem, a list of maximum values.</param>
+            <param name="totalBits">Number of bits for the solution or, in case of multi-variable problem, a list of bits numbers.</param>
+            <param name="fractionDigits">Number of fraction digits of the solution or, in case of multi-variable problem, a list of fraction digit numbers.</param>
+            <returns name="chromosome">
+            A pattern of a floating point candidate solution. Default values of total bits of 32 are used.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome(System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Double},System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            Creates a pattern of a floating point candidate solution.
+            </summary>
+            <param name="minValue">Minimum value of the solution or, in case of multi-variable problem, a list of minimum values.</param>
+            <param name="maxValue">Maximum value of the solution or, in case of multi-variable problem, a list of maximum values.</param>
+            <param name="totalBits">Number of bits for the solution or, in case of multi-variable problem, a list of bits numbers.</param>
+            <param name="fractionDigits">Number of fraction digits of the solution or, in case of multi-variable problem, a list of fraction digit numbers.</param>
+            <returns name="chromosome">
+            A pattern of a floating point candidate solution.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Chromosomes.CreateOrderedChromosome(System.Int32)">
+            <summary>
+            Creates a pattern of a candidate solution in order-based problem.
+            </summary>
+            <param name="numberOfElements">Number of solution components.</param>
+            <returns name="chromosome">
+            A pattern of a candidate solution in order-based problem.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Chromosomes.GetGenes(System.Collections.IList,System.Boolean)">
+            <summary>
+            Lists chromosome elements (genes).
+            </summary>
+            <param name="chromosomes">A chromosome or a list of chromosomes to process.</param>
+            <param name="asBits">In case of a floating point chromosome, whether genes should be listed as bits or converted a float point.</param>
+            <returns name="genes">
+            A list of chromosome elements (genes).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Chromosomes.GetDecodedGenes(System.Collections.IList)">
+            <summary>
+            Lists chromosome elements (genes) or, in case of a floating point chromosome, a floating point value.
+            </summary>
+            <param name="chromosomes">A chromosome or a list of chromosomes original representations to convert.</param>
+            <returns name="values">
+            A list of chromosome elements (genes) or, in case of a floating point chromosome, a floating point value.
+            </returns>
+        </member>
+        <member name="T:GeneticAlgorithms.Crossovers">
+            <summary>
+            Includes methods responsible for definition of crossover classes.
+            Crossover, besides selection and mutation, is one of the main operators in genetic algorithms.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.AlternatingPositionCrossover">
+            <summary>
+            Defines a crossover instance: Alternating-position Crossover (AP).
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Alternating-point Crossover (AP).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.CutAndSpliceCrossover">
+            <summary>
+            Defines a crossover instance: Cut and Splice Crossover.
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Cut and Splice Crossover.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.CycleCrossover">
+            <summary>
+            Defines a crossover instance: Cycle Crossover (CX).
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Cycle Crossover (CX).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.OnePointCrossover(System.Int32)">
+            <summary>
+            Defines a crossover instance: One-point Crossover.
+            </summary>
+            <param name="swapPoint">Fixed cutting point along the chromosome length.</param>
+            <returns name="crossover">
+            A crossover instance: Once-point Crossover.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.OrderBasedCrossover">
+            <summary>
+            Defines a crossover instance: Order Based Crossover (OX2).
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Order Based Crossover (OX2).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.OrderedCrossover">
+            <summary>
+            Defines a crossover instance: Ordered Crossover (OX1).
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Ordered Crossover (OX1).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.PartiallyMappedCrossover">
+            <summary>
+            Defines a crossover instance: Partially-mapped Crossover (PMX).
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Partially-mapped Crossover (PMX).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.PositionBasedCrossover">
+            <summary>
+            Defines a crossover instance: Position Based Crossover (POS).
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Position Based Crossover (POS).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.ThreeParentCrossover">
+            <summary>
+            Defines a crossover instance: Three Parent Crossover.
+            </summary>
+            <returns name="crossover">
+            A crossover instance: Three Parent Crossover.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.TwoPointCrossover(System.Int32,System.Int32)">
+            <summary>
+            Defines a crossover instance: Two-point Crossover.
+            </summary>
+            <param name="swapStartPoint">Fixed initial cutting point along the chromosome length.</param>
+            <param name="swapEndPoint">Fixed end cutting point along the chromosome length.</param>
+            <returns name="crossover">
+            A crossover instance: Two-point Crossover.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.UniformCrossover(System.Double)">
+            <summary>
+            Defines a crossover instance: Uniform Crossover.
+            </summary>
+            <param name="mixProbability">Probability of inheriting from the first parent in a parents' pair.</param>
+            <returns name="crossover">
+            A crossover instance: Uniform Crossover.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.VotingRecombinationCrossover(System.Int32,System.Int32)">
+            <summary>
+            Defines a crossover instance: Voting Recombination Crossover (VR).
+            </summary>
+            <param name="parentsNumber">Number of parents selected for a single crossover process.</param>
+            <param name="threshold">Minimal number of gene occurrences to inherit by the offspring.</param>
+            <returns name="crossover">
+            A crossover instance: Voting Recombination Crossover (VR).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.GetCrossover(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns type of crossover applied to a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to check for the crossover method.</param>
+            <returns name="crossover">
+            Type of crossover applied to a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Crossovers.GetCrossoverProbability(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns crossover probability for a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to check for crossover probability.</param>
+            <returns name="crossoverProbability">
+            Crossover probability for a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="T:GeneticAlgorithms.Mutations">
+            <summary>
+            Includes methods responsible for definition of mutation classes.
+            Mutation, besides selection and crossover, is one of the main operators in genetic algorithms.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.DisplacementMutation">
+            <summary>
+            Defines a mutation instance: Displacement Mutation.
+            </summary>
+            <returns name="mutation">
+            A mutation instance: Displacement Mutation.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.FlipBitMutation">
+            <summary>
+            Defines a mutation instance: Flip Bit Mutation.
+            </summary>
+            <returns name="mutation">
+            A mutation instance: Flip Bit Mutation.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.InsertionMutation">
+            <summary>
+            Defines a mutation instance: Insertion Mutation.
+            </summary>
+            <returns name="mutation">
+            A mutation instance: Insertion Mutation.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.PartialShuffleMutation">
+            <summary>
+            Defines a mutation instance: Partial Shuffle Mutation (PSM).
+            </summary>
+            <returns name="mutation">
+            A mutation instance: Partial Shuffle Mutation (PSM).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.ReverseSequenceMutation">
+            <summary>
+            Defines a mutation instance: Reverse Sequence Mutation (RSM).
+            </summary>
+            <returns name="mutation">
+            A mutation instance: Reverse Sequence Mutation (RSM).
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.TworsMutation">
+            <summary>
+            Defines a mutation instance: Twors Mutation.
+            </summary>
+            <returns name="mutation">
+            A mutation instance: Twors Mutation.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.UniformMutation">
+            <summary>
+            Defines a mutation instance: Uniform Mutation.
+            </summary>
+            <returns name="mutation">
+            A mutation instance: Uniform Mutation.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.GetMutation(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns type of mutation applied to a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to check for the mutation method.</param>
+            <returns name="mutation">
+            Type of mutation applied to a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Mutations.GetMutationProbability(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns mutation probability for a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to check for mutation probability.</param>
+            <returns name="mutationProbability">
+            Mutation probability for a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="T:GeneticAlgorithms.Populations">
+            <summary>
+            Includes methods responsible for generation of candidate solutions population basing on chromosome patterns.
+            For chromosome patterns see the <see cref="T:GeneticAlgorithms.Chromosomes"/> class.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GeneratePopulation(System.Int32,System.Object)">
+            <summary>
+            Generates a population of solution candidates basing on a chromosome pattern.
+            </summary>
+            <param name="size">Size of a population.</param>
+            <param name="chromosome">A chromosome pattern defining number of variables, and in case of floating point chromosomes: also their minimum and maximum values, total bits and fraction digits.</param>
+            <returns name="population">
+            A population of solution candidates.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GeneratePopulation(System.Int32,System.Object,System.Object)">
+            <summary>
+            Generates a population of solution candidates basing on a chromosome pattern.
+            </summary>
+            <param name="size">Size of a population.</param>
+            <param name="chromosome">A chromosome pattern defining number of variables, and in case of floating point chromosomes: also their minimum and maximum values, total bits and fraction digits.</param>
+            <param name="strategy">A strategy for a population management: tracking or performance generation strategy.</param>
+            <returns name="population">
+            A population of solution candidates.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GetCurrentGeneration(GeneticSharp.Domain.Populations.Population,System.Boolean)">
+            <summary>
+            Retrieves individuals of the most recent generation in a population.
+            </summary>
+            <param name="population">A population to retrieve most recent generation individuals from.</param>
+            <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
+            <returns name="individuals">
+            An individuals list of the most recent generation in a population.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GetInitialGeneration(GeneticSharp.Domain.Populations.Population,System.Boolean)">
+            <summary>
+            Retrieves individuals of an initial generation in a population.
+            </summary>
+            <param name="population">A population to retrieve initial generation individuals from.</param>
+            <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
+            <returns name="individuals">
+            An individuals list of initial generation in a population.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GetGeneration(GeneticSharp.Domain.Populations.Population,System.Int32,System.Boolean)">
+            <summary>
+            Retrieves individuals of a nth generation from a population.
+            </summary>
+            <param name="population">A population to retrieve nth generation individuals from.</param>
+            <param name="generation">A number of a generation to retrieve individuals for.</param>
+            <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
+            <returns name="individuals">
+            An individuals list of nth generation in a population.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GetGenerations(GeneticSharp.Domain.Populations.Population,System.Boolean,System.Boolean)">
+            <summary>
+            Retrieves individuals of all generations in a population.
+            </summary>
+            <param name="population">A population to retrieve generations individuals from.</param>
+            <param name="bestChromosomesOnly">Whether only best chromosomes should be listed or all individuals in generations.</param>
+            <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
+            <returns name="members">
+            An individuals list of all generations in a population.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GetProgressiveGenerations(GeneticSharp.Domain.Populations.Population,System.Boolean,System.Boolean)">
+            <summary>
+            Retrieves individuals of all the generations in a population, that have subsequently improved the fittness value.
+            </summary>
+            <param name="population">A population to retrieve generations individuals from.</param>
+            <param name="bestChromosomesOnly">Whether only best chromosomes should be listed or all individuals in progressive generations.</param>
+            <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
+            <returns name="individuals">
+            An individuals list of all the generations in a population, that have subsequently improved the fittness value.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GetPopulation(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Retreives a population processed by a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to retrieve a population from.</param>
+            <returns name="population">
+            A population processed by a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.GenerationsNumber(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns number of generations in a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance.</param>
+            <returns name="generations">
+            Number of generations in a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Populations.DecodeChromosome(GeneticSharp.Domain.Chromosomes.IChromosome)">
+            <summary>
+            Lists chromosome elements (genes) or, in case of a floating point chromosome, a floating point value.
+            </summary>
+        </member>
+        <member name="T:GeneticAlgorithms.Basic">
+            <summary>
+            Main methods of genetic algorithm instances.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.Basic.CreateGeneticAlgorithm(GeneticSharp.Domain.Populations.Population,System.Object,System.Object,System.Object,System.Object,System.Nullable{System.Int32},System.Double,System.Double)">
+            <summary>
+            Creates a genetic algorithm instace.
+            </summary>
+            <param name="population">A population of initial candidate solutions to resolve.</param>
+            <param name="selection">A selection instance returned by one of Selections nodes (default selection operator: Elite Selection).</param>
+            <param name="crossover">A crossover instance returned by one of Crossovers nodes (default crossover operator: Uniform Crossover).</param>
+            <param name="mutation">A mutation instance returned by one of Mutations nodes (default mutation operator: Flip Bit Mutation).</param>
+            <param name="termination">A termination instance returned by one of Termination nodes (if not specified, terminated after 100 stagnant generations).</param>
+            <param name="selectionSize">Minimum number of elements to be selected by a selection operator (if not specified, taken as a half of initial generation size).</param>
+            <param name="crossoverProbability">Crossover rate.</param>
+            <param name="mutationProbability">Mutation rate.</param>
+            <returns name="algorithm">
+            A genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Basic.EvolveGeneration(Evo.DynamoGeneticAlgorithm,System.Collections.Generic.List{System.Double})">
+            <summary>
+            Creates a new generation in the population of a genetic algorithm. Performing one cycle of selection, crossover and mutation in the most recent generation.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to evolve in.</param>
+            <param name="fitness">A list of fitness function results for input generation.</param>
+            <returns name="algorithm">
+            An updated genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Basic.HasFinished(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Checks for termination of a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance.</param>
+            <returns name="finished">
+            Whether genetic algorithm termination conditions are met.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Basic.TimeEvolving(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns total processing time of a genetic algorithm instance (in seconds).
+            </summary>
+            <param name="algorithm">A genetic algorithm instance.</param>
+            <returns name="seconds">
+            Total processing time of a genetic algorithm instance (in seconds).
+            </returns>
+        </member>
+        <member name="T:GeneticAlgorithms.PopulationStrategies">
+            <summary>
+            Includes methods responsible for generation of population strategies.
+            Population strategies are then used in the <see cref="T:GeneticAlgorithms.Populations"/> class methods, defining the way next generations are stored in a population.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.PopulationStrategies.PerformanceStrategy(System.Int32)">
+            <summary>
+            Defines a population storage strategy: only x most recent generations are stored in a population.
+            </summary>
+            <param name="maxGenerations">Maximum number of generations to be stored in a population.</param>
+            <returns name="strategy">
+            A population storage strategy: only x most recent generations are stored in a population.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.PopulationStrategies.TrackingStrategy">
+            <summary>
+            Defines a population storage strategy: all generations are stored in a population.
+            </summary>
+            <returns name="strategy">
+            A population storage strategy: all generations are stored in a population.
+            </returns>
+        </member>
+        <member name="T:GeneticAlgorithms.Terminations">
+            <summary>
+            Includes methods responsible for termination of genetic algorithms.
+            Terminations break processing of genetic algorithms if given conditions are met.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.Terminations.FitnessStagnationTermination(System.Int32)">
+            <summary>
+            Terminates genetic algorithm processing if an expected number of stagnant generations is reached.
+            </summary>
+            <param name="stagnantGenerations">A number of stagnant generations to terminate processing.</param>
+            <returns name="termination">
+            Termination of genetic algorithm processing triggered by a number of stagnant generations.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Terminations.FitnessThresholdTermination(System.Double)">
+            <summary>
+            Terminates genetic algorithm processing if an expected fitness value was found.
+            </summary>
+            <param name="expectedFitness">An expected fitness value to terminate processing.</param>
+            <returns name="termination">
+            Termination of genetic algorithm processing triggered by a threshold fitness value.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Terminations.GenerationNumberTermination(System.Int32)">
+            <summary>
+            Terminates genetic algorithm processing if a given number of generations was reached.
+            </summary>
+            <param name="maxIterations">A number of generations to product in order to terminate processing.</param>
+            <returns name="termination">
+            Termination of genetic algorithm processing triggered by a number of produced generations.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Terminations.TimeEvolvingTermination(System.Int32)">
+            <summary>
+            Terminates genetic algorithm processing if given time elapsed.
+            </summary>
+            <param name="maxSeconds">A number of seconds to terminate processing.</param>
+            <returns name="termination">
+            Termination of genetic algorithm processing triggered by time elapsed.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Terminations.AndTerminations(System.Object[])">
+            <summary>
+            Combinates terminations and terminates genetic algorithm processing if all combined conditions are met.
+            </summary>
+            <param name="terminations">Terminations to combine.</param>
+            <returns name="termination">
+            Combined terminations.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Terminations.OrTerminations(System.Object[])">
+            <summary>
+            Combinates terminations and terminates genetic algorithm processing if one of combined conditions is met.
+            </summary>
+            <param name="terminations">Terminations to combine.</param>
+            <returns name="termination">
+            Combined terminations.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Terminations.GetTermination(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns type of termination applied to a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to check for the termination method.</param>
+            <returns name="termination">
+            Type of termination applied to a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="T:GeneticAlgorithms.Selections">
+            <summary>
+            Includes methods responsible for definition of selection classes.
+            Selection, besides crossover and mutation, is one of the main operators in genetic algorithms.
+            </summary>
+        </member>
+        <member name="M:GeneticAlgorithms.Selections.EliteSelection">
+            <summary>
+            Defines a selection instance: Elite Selection.
+            </summary>
+            <returns name="selection">Selection
+            A selection instance: Elite Selection.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Selections.RouletteWheelSelection">
+            <summary>
+            Defines a selection instance: Roulette Wheel Selection.
+            </summary>
+            <returns name="selection">
+            A selection instance: Roulette Wheel Selection.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Selections.StochasticUniversalSamplingSelection">
+            <summary>
+            Defines a selection instance: Stochastic Universal Sampling Selection.
+            </summary>
+            <returns name="selection">
+            A selection instance: Stochastic Universal Sampling Selection.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Selections.TournamentSelection(System.Int32,System.Boolean)">
+            <summary>
+            Defines a selection instance: Tournament Selection.
+            </summary>
+            <param name="tournamentSize">Number of random individuals taken to each tournament.</param>
+            <param name="allowRepetetitions">Whether a given individual can win several tournaments.</param>
+            <returns name="selection">
+            A selection instance: Tournament Selection.
+            </returns>
+        </member>
+        <member name="M:GeneticAlgorithms.Selections.GetSelection(Evo.DynamoGeneticAlgorithm)">
+            <summary>
+            Returns type of selection applied to a genetic algorithm instance.
+            </summary>
+            <param name="algorithm">A genetic algorithm instance to check for the selection method.</param>
+            <returns name="selection">
+            Type of selection applied to a genetic algorithm instance.
+            </returns>
+        </member>
+        <member name="T:Evo.OrderedChromosome">
+            <summary>
+            Implementation of an ordered chromosome class usable for order-based problems, e.g. TSP.
+            </summary>
+        </member>
+        <member name="M:Evo.OrderedChromosome.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the OrderedChromosome class.
+            </summary>
+            <param name="numberOfElements">Number of unique genes in the chromosome.</param>
+        </member>
+        <member name="M:Evo.OrderedChromosome.CreateNew">
+            <summary>
+            Creates the new.
+            </summary>
+            <returns>The new.</returns>
+        </member>
+        <member name="M:Evo.OrderedChromosome.GenerateGene(System.Int32)">
+            <summary>
+            Generates the gene.
+            </summary>
+            <returns>The gene.</returns>
+            <param name="geneIndex">Gene index.</param>
+        </member>
+        <member name="M:Evo.OrderedChromosome.Clone">
+            <summary>
+            Clones the chromosome.
+            </summary>
+            <returns>Cloned chromosome.</returns>
+        </member>
+        <member name="M:Evo.OrderedChromosome.ToString">
+            <summary>
+            Returns a string that represents the current ordered chromosome.
+            </summary>
+            <returns>A string that represents the current ordered chromosome.</returns>
+        </member>
+        <member name="T:Evo.GeneticAlgorithmState">
+            <summary>
+            Possible states for a genetic algorithm.
+            </summary>
+        </member>
+        <member name="F:Evo.GeneticAlgorithmState.NotStarted">
+            <summary>
+            The GA has not been started yet.
+            </summary>
+        </member>
+        <member name="F:Evo.GeneticAlgorithmState.Started">
+            <summary>
+            The GA has been started and is running.
+            </summary>
+        </member>
+        <member name="F:Evo.GeneticAlgorithmState.Stopped">
+            <summary>
+            The GA has been stopped and is not running.
+            </summary>
+        </member>
+        <member name="F:Evo.GeneticAlgorithmState.Resumed">
+            <summary>
+            The GA has been resumed after a stop or termination reach and is running.
+            </summary>
+        </member>
+        <member name="F:Evo.GeneticAlgorithmState.TerminationReached">
+            <summary>
+            The GA has reach the termination condition and is not running.
+            </summary>
+        </member>
+        <member name="T:Evo.DynamoGeneticAlgorithm">
+            <summary>
+            GeneticSharp's GeneticAlgorithm modifications making the class applicable to Dynamo Environment.
+            </summary>
+        </member>
+        <member name="F:Evo.DynamoGeneticAlgorithm.DefaultCrossoverProbability">
+            <summary>
+            The default crossover probability.
+            </summary>
+        </member>
+        <member name="F:Evo.DynamoGeneticAlgorithm.DefaultMutationProbability">
+            <summary>
+            The default mutation probability.
+            </summary>
+        </member>
+        <member name="F:Evo.DynamoGeneticAlgorithm.maxNumberOfIterations">
+            <summary>
+            Maximum number of iterations.
+            </summary>
+        </member>
+        <member name="F:Evo.DynamoGeneticAlgorithm.Timer">
+            <summary>
+            Measures evolving time.
+            </summary>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.#ctor(GeneticSharp.Domain.Populations.IPopulation,GeneticSharp.Domain.Selections.ISelection,GeneticSharp.Domain.Crossovers.ICrossover,GeneticSharp.Domain.Mutations.IMutation)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GeneticSharp.Domain.GeneticAlgorithm"/> class.
+            </summary>
+            <param name="population">The chromosomes population.</param>
+            <param name="selection">The selection operator.</param>
+            <param name="crossover">The crossover operator.</param>
+            <param name="mutation">The mutation operator.</param>
+        </member>
+        <member name="E:Evo.DynamoGeneticAlgorithm.GenerationRan">
+            <summary>
+            Occurs when generation ran.
+            </summary>
+        </member>
+        <member name="E:Evo.DynamoGeneticAlgorithm.TerminationReached">
+            <summary>
+            Occurs when termination reached.
+            </summary>
+        </member>
+        <member name="E:Evo.DynamoGeneticAlgorithm.Stopped">
+            <summary>
+            Occurs when stopped.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.OperatorsStrategy">
+            <summary>
+            Gets the operators strategy
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.Population">
+            <summary>
+            Gets the population.
+            </summary>
+            <value>The population.</value>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.Fitness">
+            <summary>
+            Gets the list of fitness function results.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.Selection">
+            <summary>
+            Gets or sets the selection operator.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.SelectionSize">
+            <summary>
+            Gets or sets the number of members selected per selection.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.Crossover">
+            <summary>
+            Gets or sets the crossover operator.
+            </summary>
+            <value>The crossover.</value>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.CrossoverProbability">
+            <summary>
+            Gets or sets the crossover probability.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.Mutation">
+            <summary>
+            Gets or sets the mutation operator.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.MutationProbability">
+            <summary>
+            Gets or sets the mutation probability.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.Reinsertion">
+            <summary>
+            Gets or sets the reinsertion operator.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.Termination">
+            <summary>
+            Gets or sets the termination condition.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.GenerationsNumber">
+            <summary>
+            Gets the generations number.
+            </summary>
+            <value>The generations number.</value>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.BestChromosome">
+            <summary>
+            Gets the best chromosome.
+            </summary>
+            <value>The best chromosome.</value>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.TimeEvolving">
+            <summary>
+            Gets the time evolving.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.State">
+            <summary>
+            Gets the state.
+            </summary>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.IsRunning">
+            <summary>
+            Gets a value indicating whether this instance is running.
+            </summary>
+            <value><c>true</c> if this instance is running; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Evo.DynamoGeneticAlgorithm.TaskExecutor">
+            <summary>
+            Gets or sets the task executor which will be used to execute fitness evaluation.
+            </summary>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.Default">
+            <summary>
+            Passes null as default input value.
+            </summary>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.Start(System.Collections.Generic.List{System.Double})">
+            <summary>
+            Starts the genetic algorithm using population, selection, crossover, mutation and termination configured, passing the given list of fitness function results.
+            </summary>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.Resume(System.Collections.Generic.List{System.Double})">
+            <summary>
+            Resumes the last evolution of the genetic algorithm.
+            <remarks>
+            If genetic algorithm was not explicit Stop (calling Stop method), you will need provide a new extended Termination.
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.Stop">
+            <summary>
+            Stops the genetic algorithm..
+            </summary>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.EvolveOneGeneration">
+            <summary>
+            Evolve one generation.
+            </summary>
+            <returns>True if termination has been reached, otherwise false.</returns>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.CheckForTermination">
+            <summary>
+            Ends the current generation.
+            </summary>
+            <returns><c>true</c>, if current generation was ended, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.SelectParents">
+            <summary>
+            Selects the parents.
+            </summary>
+            <returns>The parents.</returns>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.Cross(System.Collections.Generic.IList{GeneticSharp.Domain.Chromosomes.IChromosome})">
+            <summary>
+            Crosses the specified parents.
+            </summary>
+            <param name="parents">The parents.</param>
+            <returns>The result chromosomes.</returns>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.Mutate(System.Collections.Generic.IList{GeneticSharp.Domain.Chromosomes.IChromosome})">
+            <summary>
+            Mutate the specified chromosomes.
+            </summary>
+            <param name="chromosomes">The chromosomes.</param>
+        </member>
+        <member name="M:Evo.DynamoGeneticAlgorithm.Reinsert(System.Collections.Generic.IList{GeneticSharp.Domain.Chromosomes.IChromosome},System.Collections.Generic.IList{GeneticSharp.Domain.Chromosomes.IChromosome})">
+            <summary>
+            Reinsert the specified offspring and parents.
+            </summary>
+            <param name="offspring">The offspring chromosomes.</param>
+            <param name="parents">The parents chromosomes.</param>
+            <returns>
+            The reinserted chromosomes.
+            </returns>
+        </member>
+    </members>
+</doc>

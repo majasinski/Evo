@@ -1,0 +1,58 @@
+<Workspace Version="1.3.3.4111" X="-308.706192373982" Y="163.923644547413" zoom="0.577188743845544" ScaleFactor="1" Name="BestChromosome" Description="Returns the best chromosome from a generation basing on fitness function." ID="e966c973-0e93-438d-a33e-28fb6dfa342d" Category="Evo.GeneticAlgorithms.Chromosomes">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="767cc737-ca17-4483-9ff1-25bfc684cb73" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="586.943541778711" y="517.03306081589" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//List of individuals to evaluate fitness function for.&#xD;&#xA;generation" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="60de99ca-30e8-44bf-85e1-0c329ab80a2b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="587.152327071484" y="435.219700359513" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="//Fitness function defined in a DYF node and passed to be evaluated by genetic algorithm.&#xD;&#xA;fitnessFunction" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="42be3f99-a991-4750-b277-d246cfb2895b" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="2493.63770023726" y="517.03306081589" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//The best chromosome in the generation.&#xD;&#xA;bestChromosome" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="831524d9-6d04-4539-8db2-b363172e8904" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="2493.63770023726" y="306.734708921277" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="//Fitness function value evaluated for the best chromosome.&#xD;&#xA;fitness" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <CoreNodeModels.HigherOrder.ApplyFunction guid="f9cb64f7-f841-4c7f-93e1-a3cda6e62b07" type="CoreNodeModels.HigherOrder.ApplyFunction" nickname="Function.Apply" x="1349.72380082948" y="435.219700359513" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="2">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </CoreNodeModels.HigherOrder.ApplyFunction>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="1adeab58-a31c-4d0e-8b7a-99fc1eaf5e18" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.GetItemAtIndex" x="2266.95575271431" y="306.734708921277" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.GetItemAtIndex@var[]..[],int">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="82ff90f5-ff0b-418a-bd48-c093a3603984" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.GetItemAtIndex" x="2266.95575271431" y="517.03306081589" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.GetItemAtIndex@var[]..[],int">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="1220e404-aa38-4716-812d-d594fc29dc39" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="SortIndexByValue" x="1762.16788647862" y="434.912137391753" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="SortIndexByValue@double[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="561c5076-6aa2-42a2-af8d-693735b4685d" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="List.LastItem" x="2005.51164014112" y="435.299399510774" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSCoreNodes.dll" function="DSCore.List.LastItem@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="767cc737-ca17-4483-9ff1-25bfc684cb73" start_index="0" end="f9cb64f7-f841-4c7f-93e1-a3cda6e62b07" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="767cc737-ca17-4483-9ff1-25bfc684cb73" start_index="0" end="82ff90f5-ff0b-418a-bd48-c093a3603984" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="60de99ca-30e8-44bf-85e1-0c329ab80a2b" start_index="0" end="f9cb64f7-f841-4c7f-93e1-a3cda6e62b07" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f9cb64f7-f841-4c7f-93e1-a3cda6e62b07" start_index="0" end="1adeab58-a31c-4d0e-8b7a-99fc1eaf5e18" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f9cb64f7-f841-4c7f-93e1-a3cda6e62b07" start_index="0" end="1220e404-aa38-4716-812d-d594fc29dc39" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1adeab58-a31c-4d0e-8b7a-99fc1eaf5e18" start_index="0" end="831524d9-6d04-4539-8db2-b363172e8904" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="82ff90f5-ff0b-418a-bd48-c093a3603984" start_index="0" end="42be3f99-a991-4750-b277-d246cfb2895b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1220e404-aa38-4716-812d-d594fc29dc39" start_index="0" end="561c5076-6aa2-42a2-af8d-693735b4685d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="561c5076-6aa2-42a2-af8d-693735b4685d" start_index="0" end="1adeab58-a31c-4d0e-8b7a-99fc1eaf5e18" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="561c5076-6aa2-42a2-af8d-693735b4685d" start_index="0" end="82ff90f5-ff0b-418a-bd48-c093a3603984" end_index="1" portType="0" />
+  </Connectors>
+  <Notes>
+    <Dynamo.Graph.Notes.NoteModel guid="b9695687-9a53-4c9d-8fba-9a11929e0d16" text="Evo		 Genetic Algorithms for Dynamo&#xD;&#xA;		 2019&#xD;&#xA;&#xD;&#xA;Created by: Marcin Jasiński&#xD;&#xA;marcin.jasinski@polsl.pl&#xD;&#xA;&#xD;&#xA;Silesian University of Technology&#xD;&#xA;Department of Mechanics and Bridges&#xD;&#xA;Gliwice, Poland&#xD;&#xA;&#xD;&#xA;Repository: github.com/majasinski/Evo" x="587.471520251754" y="176.197855087611" />
+    <Dynamo.Graph.Notes.NoteModel guid="5aa6031d-6548-41e7-ae39-bc7a586a0225" text="Integral part of the solution is GeneticSharp library by Diego Giacomelli:&#xD;&#xA;&#xD;&#xA;github.com/giacomelli/GeneticSharp" x="586.820508863942" y="356.68564984757" />
+  </Notes>
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Podgląd tła" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>
