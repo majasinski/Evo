@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C3E3680A-AA64-4729-A5DB-E2B2DA045837}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Evo</RootNamespace>
+    <AssemblyName>Evo</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet />
+    <DocumentationFile>bin\Debug\Evo.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CoreNodeModels">
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\nodes\CoreNodeModels.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DSCoreNodes">
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\DSCoreNodes.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DynamoCore">
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\DynamoCore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DynamoServices">
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\DynamoServices.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DynamoUtilities">
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\DynamoUtilities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GeneticSharp.Domain">
+      <HintPath>..\..\GeneticSharp\GeneticSharp.Domain\bin\Debug\net462\GeneticSharp.Domain.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="GeneticSharp.Infrastructure.Framework">
+      <HintPath>..\..\GeneticSharp\GeneticSharp.Domain\bin\Debug\net462\GeneticSharp.Infrastructure.Framework.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ProtoCore">
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\ProtoCore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ProtoGeometry">
+      <HintPath>C:\Program Files\Dynamo\Dynamo Core\1.3\ProtoGeometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Chromosomes.cs" />
+    <Compile Include="Classes\Crossovers.cs" />
+    <Compile Include="Classes\DynamoOrderedChromosome.cs" />
+    <Compile Include="Classes\Mutations.cs" />
+    <Compile Include="Classes\Populations.cs" />
+    <Compile Include="Classes\Basic.cs" />
+    <Compile Include="Classes\DynamoGeneticAlgorithm.cs" />
+    <Compile Include="Classes\PopulationStrategies.cs" />
+    <Compile Include="Classes\Terminations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Classes\Selections.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pkg.json" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome.double1-double1-int1-int1.Large.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome.double1-double1-int1-int1.Small.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome.double1-double1-int1.Large.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome.double1-double1-int1.Small.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome.double1-double1.Large.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateFloatingPointChromosome.double1-double1.Small.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateOrderedChromosome.Large.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.CreateOrderedChromosome.Small.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.GetGenes.Large.png" />
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.GetGenes.Small.png" />
+    <None Include="Resources\GeneticAlgorithms.Crossovers.AlternatingPositionCrossover.Large.png" />
+    <None Include="Resources\GeneticAlgorithms.Crossovers.AlternatingPositionCrossover.Small.png" />
+    <None Include="Resources\GeneticAlgorithms.Populations.GeneratePopulation.int-var.Large.png" />
+    <None Include="Resources\GeneticAlgorithms.Populations.GeneratePopulation.int-var.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EvoImages.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.CutAndSpliceCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.CutAndSpliceCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.CycleCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.CycleCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.GetCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.GetCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.OnePointCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.OnePointCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.OrderBasedCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.OrderBasedCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.OrderedCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.OrderedCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.PartiallyMappedCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.PartiallyMappedCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.PositionBasedCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.PositionBasedCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.ThreeParentCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.ThreeParentCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.TwoPointCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.TwoPointCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.UniformCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.UniformCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.VotingRecombinationCrossover.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.VotingRecombinationCrossover.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.DisplacementMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.DisplacementMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.FlipBitMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.FlipBitMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.GetMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.GetMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.InsertionMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.InsertionMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.PartialShuffleMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.PartialShuffleMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.ReverseSequenceMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.ReverseSequenceMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.TworsMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.TworsMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.UniformMutation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.UniformMutation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.GetCrossoverProbability.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Crossovers.GetCrossoverProbability.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.GetMutationProbability.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Mutations.GetMutationProbability.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.EliteSelection.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.EliteSelection.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.GetSelection.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.GetSelection.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.RouletteWheelSelection.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.RouletteWheelSelection.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.StochasticUniversalSamplingSelection.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.StochasticUniversalSamplingSelection.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.TournamentSelection.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Selections.TournamentSelection.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.PopulationStrategies.PerformanceStrategy.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.PopulationStrategies.PerformanceStrategy.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.PopulationStrategies.TrackingStrategy.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.PopulationStrategies.TrackingStrategy.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GeneratePopulation.int-var-var.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GeneratePopulation.int-var-var.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetCurrentGeneration.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetCurrentGeneration.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetGeneration.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetGeneration.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetGenerations.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetGenerations.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetInitialGeneration.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetInitialGeneration.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetProgressiveGenerations.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetProgressiveGenerations.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GenerationsNumber.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GenerationsNumber.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetPopulation.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Populations.GetPopulation.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.CreateGeneticAlgorithm.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.CreateGeneticAlgorithm.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.EvolveGeneration.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.EvolveGeneration.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.GetDecodedGenes.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Chromosomes.GetDecodedGenes.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.FitnessStagnationTermination.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.FitnessStagnationTermination.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.FitnessThresholdTermination.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.FitnessThresholdTermination.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.GenerationNumberTermination.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.GenerationNumberTermination.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.GetTermination.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.GetTermination.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.TimeEvolvingTermination.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.TimeEvolvingTermination.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.HasFinished.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.HasFinished.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.TimeEvolving.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Basic.TimeEvolving.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.AndTerminations.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.AndTerminations.Small.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.OrTerminations.Large.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GeneticAlgorithms.Terminations.OrTerminations.Small.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)*.*" "$(AppData)\Dynamo\Dynamo Revit\1.3\packages\$(SolutionName)\bin\"
+xcopy /Y "$(TargetDir)*.*" "$(AppData)\Dynamo\Dynamo Core\1.3\packages\$(SolutionName)\bin\"
+
+xcopy /Y "$(ProjectDir)pkg.json" "$(AppData)\Dynamo\Dynamo Revit\1.3\packages\$(SolutionName)"
+xcopy /Y "$(ProjectDir)pkg.json" "$(AppData)\Dynamo\Dynamo Core\1.3\packages\$(SolutionName)"</PostBuildEvent>
+  </PropertyGroup>
+  <Target Name="AfterBuild">
+    <!-- Get System.Drawing.dll -->
+    <GetReferenceAssemblyPaths TargetFrameworkMoniker=".NETFramework, Version=v4.7">
+      <Output TaskParameter="FullFrameworkReferenceAssemblyPaths" PropertyName="FrameworkAssembliesPath" />
+    </GetReferenceAssemblyPaths>
+    <!-- Get assembly -->
+    <GetAssemblyIdentity AssemblyFiles="$(OutDir)$(TargetName).dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
+    </GetAssemblyIdentity>
+    <!-- Generate customization dll -->
+    <GenerateResource SdkToolsPath="$(TargetFrameworkSDKToolsDirectory)" UseSourcePath="true" Sources="$(ProjectDir)\Resources\EvoImages.resx" OutputResources="$(ProjectDir)\Resources\EvoImages.resources" References="$(FrameworkAssembliesPath)System.Drawing.dll" />
+    <AL SdkToolsPath="$(TargetFrameworkSDKToolsDirectory)" TargetType="library" EmbedResources="$(ProjectDir)\Resources\EvoImages.resources" OutputAssembly="$(OutDir)\Evo.customization.dll" Version="%(AssemblyInfo.Version)" />
+  </Target>
+</Project>
