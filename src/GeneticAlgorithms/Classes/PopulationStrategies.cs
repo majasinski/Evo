@@ -14,13 +14,9 @@ namespace GeneticAlgorithms
     /// </summary>
     public static class PopulationStrategies
     {
-        /// <summary>
-        /// Defines a population storage strategy: only x most recent generations are stored in a population.
-        /// </summary>
+        /// <summary>Defines a population storage strategy: only x most recent generations are stored in a population.</summary>
         /// <param name="maxGenerations">Maximum number of generations to be stored in a population.</param>
-        /// <returns name="strategy">
-        /// A population storage strategy: only x most recent generations are stored in a population.
-        /// </returns>
+        /// <returns name="strategy">A population storage strategy: only x most recent generations are stored in a population.</returns>
         [NodeCategory("Create")]
         public static PerformanceGenerationStrategy PerformanceStrategy(int maxGenerations = 10)
         {
@@ -28,12 +24,8 @@ namespace GeneticAlgorithms
             return strategy;
         }
 
-        /// <summary>
-        /// Defines a population storage strategy: all generations are stored in a population.
-        /// </summary>
-        /// <returns name="strategy">
-        /// A population storage strategy: all generations are stored in a population.
-        /// </returns>
+        /// <summary>Defines a population storage strategy: all generations are stored in a population.</summary>
+        /// <returns name="strategy">A population storage strategy: all generations are stored in a population.</returns>
         [NodeCategory("Create")]
         public static TrackingGenerationStrategy TrackingStrategy()
         {

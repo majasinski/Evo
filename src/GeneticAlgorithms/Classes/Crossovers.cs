@@ -15,49 +15,33 @@ namespace GeneticAlgorithms
     /// </summary>
     public static class Crossovers
     {
-        /// <summary>
-        /// Defines a crossover instance: Alternating-position Crossover (AP).
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Alternating-point Crossover (AP).
-        /// </returns>
+        /// <summary>Defines a crossover instance: Alternating-position Crossover (AP). Designed for combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Alternating-point Crossover (AP).</returns>
         [NodeCategory("Create")]
         public static AlternatingPositionCrossover AlternatingPositionCrossover()
         {
             return new AlternatingPositionCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Cut and Splice Crossover.
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Cut and Splice Crossover.
-        /// </returns>
+        /// <summary>Defines a crossover instance: Cut and Splice Crossover. Designed for binary and combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Cut and Splice Crossover.</returns>
         [NodeCategory("Create")]
         public static CutAndSpliceCrossover CutAndSpliceCrossover()
         {
             return new CutAndSpliceCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Cycle Crossover (CX).
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Cycle Crossover (CX).
-        /// </returns>
+        /// <summary>Defines a crossover instance: Cycle Crossover (CX). Designed for combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Cycle Crossover (CX).</returns>
         [NodeCategory("Create")]
         public static CycleCrossover CycleCrossover()
         {
             return new CycleCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: One-point Crossover.
-        /// </summary>
+        /// <summary>Defines a crossover instance: One-point Crossover. Designed for binary and combinatorial chromosomes.</summary>
         /// <param name="swapPoint">Fixed cutting point along the chromosome length.</param>
-        /// <returns name="crossover">
-        /// A crossover instance: Once-point Crossover.
-        /// </returns>
+        /// <returns name="crossover">A crossover instance: Once-point Crossover.</returns>
         [NodeCategory("Create")]
         public static OnePointCrossover OnePointCrossover(int swapPoint)
         {
@@ -68,74 +52,59 @@ namespace GeneticAlgorithms
             return new OnePointCrossover(swapPoint - 1);
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Order Based Crossover (OX2).
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Order Based Crossover (OX2).
-        /// </returns>
+        /// <summary>Defines a crossover instance: Order Based Crossover (OX2). Designed for combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Order Based Crossover (OX2).</returns>
         [NodeCategory("Create")]
         public static OrderBasedCrossover OrderBasedCrossover()
         {
             return new OrderBasedCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Ordered Crossover (OX1).
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Ordered Crossover (OX1).
-        /// </returns>
+        /// <summary>Defines a crossover instance: Ordered Crossover (OX1). Designed for combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Ordered Crossover (OX1).</returns>
         [NodeCategory("Create")]
         public static OrderedCrossover OrderedCrossover()
         {
             return new OrderedCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Partially-mapped Crossover (PMX).
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Partially-mapped Crossover (PMX).
-        /// </returns>
+        /// <summary>Defines a crossover instance: Partially-mapped Crossover (PMX). Designed for combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Partially-mapped Crossover (PMX).</returns>
         [NodeCategory("Create")]
         public static PartiallyMappedCrossover PartiallyMappedCrossover()
         {
             return new PartiallyMappedCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Position Based Crossover (POS).
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Position Based Crossover (POS).
-        /// </returns>
+        /// <summary>Defines a crossover instance: Position Based Crossover (POS). Designed for combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Position Based Crossover (POS).</returns>
         [NodeCategory("Create")]
         public static PositionBasedCrossover PositionBasedCrossover()
         {
             return new PositionBasedCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Three Parent Crossover.
-        /// </summary>
-        /// <returns name="crossover">
-        /// A crossover instance: Three Parent Crossover.
-        /// </returns>
+        /// <summary>Defines a crossover instance: Simulated Binary Crossover (SBX). Designed for double chromosomes.</summary>
+        /// <param name="distributionIndex">A non-negative value defining dispersion rate of offsprings in relation to parents.</param>
+        /// <returns name="crossover">A crossover instance: Simulated Binary Crossover (SBX).</returns>
+        [NodeCategory("Create")]
+        public static SimulatedBinaryCrossover SimulatedBinaryCrossover(double distributionIndex = 1)
+        {
+            return new SimulatedBinaryCrossover(distributionIndex);
+        }
+
+        /// <summary>Defines a crossover instance: Three Parent Crossover. Designed for binary and combinatorial chromosomes.</summary>
+        /// <returns name="crossover">A crossover instance: Three Parent Crossover.</returns>
         [NodeCategory("Create")]
         public static ThreeParentCrossover ThreeParentCrossover()
         {
             return new ThreeParentCrossover();
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Two-point Crossover.
-        /// </summary>
+        /// <summary>Defines a crossover instance: Two-point Crossover. Designed for binary and combinatorial chromosomes.</summary>
         /// <param name="swapStartPoint">Fixed initial cutting point along the chromosome length.</param>
         /// <param name="swapEndPoint">Fixed end cutting point along the chromosome length.</param>
-        /// <returns name="crossover">
-        /// A crossover instance: Two-point Crossover.
-        /// </returns>
+        /// <returns name="crossover">A crossover instance: Two-point Crossover.</returns>
         [NodeCategory("Create")]
         public static TwoPointCrossover TwoPointCrossover(int swapStartPoint, int swapEndPoint)
         {
@@ -154,13 +123,9 @@ namespace GeneticAlgorithms
             return new TwoPointCrossover(swapStartPoint - 1, swapEndPoint - 1);
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Uniform Crossover.
-        /// </summary>
+        /// <summary>Defines a crossover instance: Uniform Crossover. Designed for combinatorial chromosomes. Designed for binary and combinatorial chromosomes.</summary>
         /// <param name="mixProbability">Probability of inheriting from the first parent in a parents' pair.</param>
-        /// <returns name="crossover">
-        /// A crossover instance: Uniform Crossover.
-        /// </returns>
+        /// <returns name="crossover">A crossover instance: Uniform Crossover.</returns>
         [NodeCategory("Create")]
         public static UniformCrossover UniformCrossover(double mixProbability = 0.5)
         {
@@ -171,14 +136,10 @@ namespace GeneticAlgorithms
             return new UniformCrossover((float) mixProbability);
         }
 
-        /// <summary>
-        /// Defines a crossover instance: Voting Recombination Crossover (VR).
-        /// </summary>
+        /// <summary>Defines a crossover instance: Voting Recombination Crossover (VR). Designed for binary and combinatorial chromosomes.</summary>
         /// <param name="parentsNumber">Number of parents selected for a single crossover process.</param>
         /// <param name="threshold">Minimal number of gene occurrences to inherit by the offspring.</param>
-        /// <returns name="crossover">
-        /// A crossover instance: Voting Recombination Crossover (VR).
-        /// </returns>
+        /// <returns name="crossover">A crossover instance: Voting Recombination Crossover (VR).</returns>
         [NodeCategory("Create")]
         public static VotingRecombinationCrossover VotingRecombinationCrossover(int parentsNumber = 4, int threshold = 3)
         {
@@ -193,13 +154,9 @@ namespace GeneticAlgorithms
             return new VotingRecombinationCrossover(parentsNumber, threshold);
         }
 
-        /// <summary>
-        /// Returns type of crossover applied to a genetic algorithm instance.
-        /// </summary>
+        /// <summary>Returns type of crossover applied to a genetic algorithm instance.</summary>
         /// <param name="algorithm">A genetic algorithm instance to check for the crossover method.</param>
-        /// <returns name="crossover">
-        /// Type of crossover applied to a genetic algorithm instance.
-        /// </returns>
+        /// <returns name="crossover">Type of crossover applied to a genetic algorithm instance.</returns>
         [NodeCategory("Query")]
         public static object GetCrossover(DynamoGeneticAlgorithm algorithm)
         {
@@ -235,6 +192,10 @@ namespace GeneticAlgorithms
             {
                 return algorithm.Crossover as PositionBasedCrossover;
             }
+            if (algorithm.Crossover is SimulatedBinaryCrossover)
+            {
+                return algorithm.Crossover as SimulatedBinaryCrossover;
+            }
             if (algorithm.Crossover is ThreeParentCrossover)
             {
                 return algorithm.Crossover as ThreeParentCrossover;
@@ -254,13 +215,9 @@ namespace GeneticAlgorithms
             return null;
         }
 
-        /// <summary>
-        /// Returns crossover probability for a genetic algorithm instance.
-        /// </summary>
+        /// <summary>Returns crossover probability for a genetic algorithm instance.</summary>
         /// <param name="algorithm">A genetic algorithm instance to check for crossover probability.</param>
-        /// <returns name="crossoverProbability">
-        /// Crossover probability for a genetic algorithm instance.
-        /// </returns>
+        /// <returns name="crossoverProbability">Crossover probability for a genetic algorithm instance.</returns>
         [NodeCategory("Query")]
         public static double GetCrossoverProbability(DynamoGeneticAlgorithm algorithm)
         {

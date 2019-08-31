@@ -9,29 +9,27 @@ using GeneticSharp.Domain.Randomizations;
 using GeneticSharp.Infrastructure.Framework.Commons;
 
 using Dynamo.Graph.Nodes;
+using GeneticSharp.Domain.Populations;
+using Autodesk.DesignScript.Runtime;
 
 namespace GeneticAlgorithms
 {
     /// <summary>
     /// Includes methods responsible for definition of chromosome (candidate solution) patterns.
-    /// Physical solutions are created by passing a pattern to the <see cref="Populations"/> class.
+    /// Physical solutions are created by passing the pattern to the <see cref="Populations"/> class.
     /// </summary>
     public static class Chromosomes
     {
         private static readonly int defaultFractionDigits = 3;
 
-        /// <summary>
-        /// Creates a pattern of a floating point candidate solution.
-        /// </summary>
+        /// <summary>Creates a pattern of a binary candidate solution.</summary>
         /// <param name="minValue">Minimum value of the solution or, in case of multi-variable problem, a list of minimum values.</param>
         /// <param name="maxValue">Maximum value of the solution or, in case of multi-variable problem, a list of maximum values.</param>
         /// <param name="totalBits">Number of bits for the solution or, in case of multi-variable problem, a list of bits numbers.</param>
         /// <param name="fractionDigits">Number of fraction digits of the solution or, in case of multi-variable problem, a list of fraction digit numbers.</param>
-        /// <returns name="chromosome">
-        /// A pattern of a floating point candidate solution. Default values of total bits of 32 and fraction digits of 3 are used.
-        /// </returns>
+        /// <returns name="chromosome">A pattern of a binary candidate solution. Minimum allowable number of bits and default value of 3 fraction digits is used.</returns>
         [NodeCategory("Create")]
-        public static FloatingPointChromosome CreateFloatingPointChromosome(IList<double> minValue, IList<double> maxValue)
+        public static BinaryChromosome CreateBinaryChromosome(IList<double> minValue, IList<double> maxValue)
         {
             if (minValue.Count != maxValue.Count)
             {
@@ -39,21 +37,17 @@ namespace GeneticAlgorithms
             }
             List<int> fractionDigits = Enumerable.Repeat(defaultFractionDigits, minValue.Count).ToList();
 
-            return CreateFloatingPointChromosome(minValue, maxValue, new List<int>(), fractionDigits);
+            return CreateBinaryChromosome(minValue, maxValue, new List<int>(), fractionDigits);
         }
 
-        /// <summary>
-        /// Creates a pattern of a floating point candidate solution.
-        /// </summary>
+        /// <summary>Creates a pattern of a binary candidate solution.</summary>
         /// <param name="minValue">Minimum value of the solution or, in case of multi-variable problem, a list of minimum values.</param>
         /// <param name="maxValue">Maximum value of the solution or, in case of multi-variable problem, a list of maximum values.</param>
         /// <param name="totalBits">Number of bits for the solution or, in case of multi-variable problem, a list of bits numbers.</param>
         /// <param name="fractionDigits">Number of fraction digits of the solution or, in case of multi-variable problem, a list of fraction digit numbers.</param>
-        /// <returns name="chromosome">
-        /// A pattern of a floating point candidate solution. Default values of total bits of 32 are used.
-        /// </returns>
+        /// <returns name="chromosome">A pattern of a binary candidate solution. Minimum allowable number of bits is used.</returns>
         [NodeCategory("Create")]
-        public static FloatingPointChromosome CreateFloatingPointChromosome(IList<double> minValue, IList<double> maxValue, IList<int> fractionDigits)
+        public static BinaryChromosome CreateBinaryChromosome(IList<double> minValue, IList<double> maxValue, IList<int> fractionDigits)
         {
             if (minValue.Count != maxValue.Count)
             {
@@ -66,21 +60,17 @@ namespace GeneticAlgorithms
                     throw new Exception("List dimensions are not equal.");
                 }
             }
-            return CreateFloatingPointChromosome(minValue, maxValue, new List<int>(), fractionDigits);
+            return CreateBinaryChromosome(minValue, maxValue, new List<int>(), fractionDigits);
         }
 
-        /// <summary>
-        /// Creates a pattern of a floating point candidate solution.
-        /// </summary>
+        /// <summary>Creates a pattern of a binary candidate solution.</summary>
         /// <param name="minValue">Minimum value of the solution or, in case of multi-variable problem, a list of minimum values.</param>
         /// <param name="maxValue">Maximum value of the solution or, in case of multi-variable problem, a list of maximum values.</param>
         /// <param name="totalBits">Number of bits for the solution or, in case of multi-variable problem, a list of bits numbers.</param>
         /// <param name="fractionDigits">Number of fraction digits of the solution or, in case of multi-variable problem, a list of fraction digit numbers.</param>
-        /// <returns name="chromosome">
-        /// A pattern of a floating point candidate solution.
-        /// </returns>
+        /// <returns name="chromosome">A pattern of a binary candidate solution.</returns>
         [NodeCategory("Create")]
-        public static FloatingPointChromosome CreateFloatingPointChromosome(IList<double> minValue, IList<double> maxValue, IList<int> totalBits, IList<int> fractionDigits)
+        public static BinaryChromosome CreateBinaryChromosome(IList<double> minValue, IList<double> maxValue, IList<int> totalBits, IList<int> fractionDigits)
         {
             bool computeBits = false;
             if (minValue.Count() != maxValue.Count())
@@ -110,19 +100,19 @@ namespace GeneticAlgorithms
                 }
             }
 
-            double[] geneValues = new double[minValue.Count()];
+            double[] genes = new double[minValue.Count()];
             var rnd = RandomizationProvider.Current;
 
             int maxBits = 0;
-            for (int value = 0; value < geneValues.Length; value++)
+            for (int value = 0; value < genes.Length; value++)
             {
-                geneValues[value] = Math.Round(rnd.GetDouble(minValue[value], maxValue[value]), fractionDigits[value]);
+                genes[value] = Math.Round(rnd.GetDouble(minValue[value], maxValue[value]), fractionDigits[value]);
                 if (computeBits)
                 {
                     int bits = 0;
 
                     bits = BinaryStringRepresentation.ToRepresentation(
-                        (fractionDigits[value] > 0 ? Math.Pow(10, -fractionDigits[value]) : 0) + geneValues[value], 0, fractionDigits[value]).Length;
+                        (fractionDigits[value] > 0 ? Math.Pow(10, -fractionDigits[value]) : 0) + genes[value], 0, fractionDigits[value]).Length;
                     if (bits > maxBits)
                     {
                         maxBits = bits;
@@ -146,83 +136,118 @@ namespace GeneticAlgorithms
                 totalBits = Enumerable.Repeat(maxBits, minValue.Count()).ToList();
             }
 
-            return new FloatingPointChromosome(
+            return new BinaryChromosome(
                 minValue.ToArray(),
                 maxValue.ToArray(),
                 totalBits.ToArray(),
                 fractionDigits.ToArray(),
-                geneValues
+                genes
             );
         }
 
-        /// <summary>
-        /// Creates a pattern of a candidate solution in order-based problem.
-        /// </summary>
-        /// <param name="numberOfElements">Number of solution components.</param>
-        /// <returns name="chromosome">
-        /// A pattern of a candidate solution in order-based problem.
-        /// </returns>
+        /// <summary>Creates a pattern of a double (floating point) candidate solution.</summary>
+        /// <param name="minValue">Minimum value of the solution or, in case of multi-variable problem, a list of minimum values.</param>
+        /// <param name="maxValue">Maximum value of the solution or, in case of multi-variable problem, a list of maximum values.</param>
+        /// <returns name="chromosome">A pattern of a double (floating point) candidate solution.</returns>
         [NodeCategory("Create")]
-        public static OrderedChromosome CreateOrderedChromosome(int numberOfElements)
+        public static DoubleChromosome CreateDoubleChromosome(IList<double> minValue, IList<double> maxValue)
         {
-            return new OrderedChromosome(numberOfElements);
+            return new DoubleChromosome(minValue.ToArray(), maxValue.ToArray());
         }
 
-        /// <summary>
-        /// Lists chromosome elements (genes).
-        /// </summary>
-        /// <param name="chromosomes">A chromosome or a list of chromosomes to process.</param>
-        /// <param name="asBits">In case of a floating point chromosome, whether genes should be listed as bits or converted a float point.</param>
-        /// <returns name="genes">
-        /// A list of chromosome elements (genes).
-        /// </returns>
-        [NodeCategory("Action")]
-        public static object GetGenes(IList chromosomes, bool asBits = false)
+        /// <summary>Creates a pattern of a combinatorial candidate solution.</summary>
+        /// <param name="numberOfElements">Number of solution components.</param>
+        /// <returns name="chromosome">A pattern of a combinatorial candidate solution.</returns>
+        [NodeCategory("Create")]
+        public static CombinatorialChromosome CreateCombinatorialChromosome(int numberOfElements)
         {
-            if(!asBits)
-            {
-                return GetDecodedGenes(chromosomes);
-            }
+            return new CombinatorialChromosome(numberOfElements);
+        }
 
-            List<IList> genes = new List<IList>();
-            foreach(object chromosome in chromosomes)
+        /// <summary>Decodes encoded chromosome.</summary>
+        /// <param name="chromosome">An encoded chromosome.</param>
+        /// <returns name="decoded">Numerical values in an encoded chromosome.</returns>
+        [NodeCategory("Action")]
+        public static object DecodeChromosome(object chromosome)
+        {
+            if (chromosome is BinaryChromosome)
+            {
+                return ((BinaryChromosome) chromosome).ToFloatingPoints().ToList();
+            }
+            if (chromosome is CombinatorialChromosome)
             {
                 List<int> geneValues = new List<int>();
-                if (chromosome is FloatingPointChromosome)
+                foreach (Gene gene in ((CombinatorialChromosome) chromosome).GetGenes())
                 {
-                    foreach (Gene gene in ((FloatingPointChromosome) chromosome).GetGenes())
-                    {
-                        geneValues.Add((int) gene.Value);
-                    }
+                    geneValues.Add((int)gene.Value);
                 }
-                else if (chromosome is OrderedChromosome)
-                {
-                    foreach (Gene gene in ((OrderedChromosome) chromosome).GetGenes())
-                    {
-                        geneValues.Add((int) gene.Value);
-                    }
-                }
-                genes.Add(geneValues);
+                return geneValues;
             }
-            return genes;
+            if (chromosome is DoubleChromosome)
+            {
+                List<double> geneValues = new List<double>();
+                foreach (Gene gene in ((DoubleChromosome) chromosome).GetGenes())
+                {
+                    geneValues.Add((double) gene.Value);
+                }
+                return geneValues;
+            }
+            return null;
         }
 
-        /// <summary>
-        /// Lists chromosome elements (genes) or, in case of a floating point chromosome, a floating point value.
-        /// </summary>
-        /// <param name="chromosomes">A chromosome or a list of chromosomes original representations to convert.</param>
-        /// <returns name="values">
-        /// A list of chromosome elements (genes) or, in case of a floating point chromosome, a floating point value.
-        /// </returns>
+        /// <summary>Lists chromosome elements (genes).</summary>
+        /// <param name="chromosome">A chromosome or a list of chromosomes to process.</param>
+        /// <returns name="genes">A list of chromosome elements (genes).</returns>
         [NodeCategory("Action")]
-        public static object GetDecodedGenes(IList chromosomes)
+        public static object GetGenes(object chromosome)
         {
-            List<object> chromosomesValues = new List<object>();
-            foreach (IChromosome chromosome in chromosomes)
+            List<object> genes = new List<object>();
+            if (chromosome is BinaryChromosome)
             {
-                chromosomesValues.Add(Populations.DecodeChromosome(chromosome));
+                foreach (Gene gene in ((BinaryChromosome) chromosome).GetGenes())
+                {
+                    genes.Add((int) gene.Value);
+                }
+                return genes;
             }
-            return chromosomesValues;
+            if (chromosome is CombinatorialChromosome)
+            {
+                foreach (Gene gene in ((CombinatorialChromosome) chromosome).GetGenes())
+                {
+                    genes.Add((int)gene.Value);
+                }
+                return genes;
+            }
+            if (chromosome is DoubleChromosome)
+            {
+                foreach (Gene gene in ((DoubleChromosome) chromosome).GetGenes())
+                {
+                    genes.Add((double)gene.Value);
+                }
+                return genes;
+            }
+            return null;
+        }
+
+        /// <summary>Returns fitness for an encoded chromosome. For decoded chromosomes, please apply fitness function directly.</summary>
+        /// <param name="chromosome">An encoded chromosome.</param>
+        /// <returns name="fitness">Fitness function value.</returns>
+        [NodeCategory("Query")]
+        public static double? Fitness(object chromosome)
+        {
+            if (chromosome is BinaryChromosome)
+            {
+                return ((BinaryChromosome) chromosome).Fitness;
+            }
+            if (chromosome is CombinatorialChromosome)
+            {
+                return ((CombinatorialChromosome) chromosome).Fitness;
+            }
+            if (chromosome is DoubleChromosome)
+            {
+                return ((DoubleChromosome) chromosome).Fitness;
+            }
+            return null;
         }
     }
 }

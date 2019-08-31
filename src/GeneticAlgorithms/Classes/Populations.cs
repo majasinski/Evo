@@ -18,51 +18,52 @@ namespace GeneticAlgorithms
     /// </summary>
     public static class Populations
     {
-        /// <summary>
-        /// Generates a population of solution candidates basing on a chromosome pattern.
-        /// </summary>
+        /// <summary>Generates a population of solution candidates basing on a chromosome pattern.</summary>
         /// <param name="size">Size of a population.</param>
-        /// <param name="chromosome">A chromosome pattern defining number of variables, and in case of floating point chromosomes: also their minimum and maximum values, total bits and fraction digits.</param>
-        /// <returns name="population">
-        /// A population of solution candidates.
-        /// </returns>
+        /// <param name="chromosome">A chromosome pattern.</param>
+        /// <returns name="population">A population of solution candidates.</returns>
         [NodeCategory("Create")]
         public static Population GeneratePopulation(int size, object chromosome)
         {
-            if (chromosome is FloatingPointChromosome)
+            var defaultPerformance = new PerformanceGenerationStrategy(10);
+            if (chromosome is BinaryChromosome)
             {
-                return GeneratePopulation(size, (FloatingPointChromosome) chromosome, new PerformanceGenerationStrategy(10));
+                return GeneratePopulation(size, (BinaryChromosome) chromosome, defaultPerformance);
             }
-            if (chromosome is OrderedChromosome)
+            if (chromosome is CombinatorialChromosome)
             {
-                return GeneratePopulation(size, (OrderedChromosome) chromosome, new PerformanceGenerationStrategy(10));
+                return GeneratePopulation(size, (CombinatorialChromosome) chromosome, defaultPerformance);
+            }
+            if (chromosome is DoubleChromosome)
+            {
+                return GeneratePopulation(size, (DoubleChromosome) chromosome, defaultPerformance);
             }
             return null;
         }
 
-        /// <summary>
-        /// Generates a population of solution candidates basing on a chromosome pattern.
-        /// </summary>
+        /// <summary>Generates a population of solution candidates basing on a chromosome pattern.</summary>
         /// <param name="size">Size of a population.</param>
-        /// <param name="chromosome">A chromosome pattern defining number of variables, and in case of floating point chromosomes: also their minimum and maximum values, total bits and fraction digits.</param>
+        /// <param name="chromosome">A chromosome pattern.</param>
         /// <param name="strategy">A strategy for a population management: tracking or performance generation strategy.</param>
-        /// <returns name="population">
-        /// A population of solution candidates.
-        /// </returns>
+        /// <returns name="population">A population of solution candidates.</returns>
         [NodeCategory("Create")]
         public static Population GeneratePopulation(int size, object chromosome, object strategy)
         {
             Population population = null;
-            if(chromosome is FloatingPointChromosome)
+            if(chromosome is BinaryChromosome)
             {
-                population = new Population(size, size, (FloatingPointChromosome) chromosome);
+                population = new Population(size, size, (BinaryChromosome) chromosome);
             }
-            else if (chromosome is OrderedChromosome)
+            else if (chromosome is CombinatorialChromosome)
             {
-                population = new Population(size, size, (OrderedChromosome) chromosome);
+                population = new Population(size, size, (CombinatorialChromosome) chromosome);
+            }
+            else if (chromosome is DoubleChromosome)
+            {
+                population = new Population(size, size, (DoubleChromosome)chromosome);
             }
 
-            if(population == null)
+            if (population == null)
             {
                 return null;
             }
@@ -79,303 +80,181 @@ namespace GeneticAlgorithms
             return population;
         }
 
-        /// <summary>
-        /// Retrieves individuals of the most recent generation in a population.
-        /// </summary>
-        /// <param name="population">A population to retrieve most recent generation individuals from.</param>
-        /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
-        /// <returns name="individuals">
-        /// An individuals list of the most recent generation in a population.
-        /// </returns>
+        /// <summary>Retrieves the most recent generation from a population.</summary>
+        /// <param name="population">A population to retrieve most recent generation from.</param>
+        /// <returns name="generation">The most recent generation in a population.</returns>
         [NodeCategory("Action")]
-        public static IList GetCurrentGeneration(Population population, bool encoded = false)
+        public static Generation GetCurrentGeneration(Population population)
         {
-            if (encoded)
-            {
-                return population.CurrentGeneration.Chromosomes.ToList();
-            }
-
-            IList generationIndividuals = new IList[population.MaxSize];
-            int generationIndividual = 0;
-            foreach (IChromosome populationChromosome in population.CurrentGeneration.Chromosomes)
-            {
-                generationIndividuals[generationIndividual] = DecodeChromosome(populationChromosome);
-                generationIndividual++;
-            }
-            return generationIndividuals;
+            return population.CurrentGeneration;
         }
 
-        /// <summary>
-        /// Retrieves individuals of an initial generation in a population.
-        /// </summary>
-        /// <param name="population">A population to retrieve initial generation individuals from.</param>
-        /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
-        /// <returns name="individuals">
-        /// An individuals list of initial generation in a population.
-        /// </returns>
+        /// <summary>Retrieves an initial generation from a population.</summary>
+        /// <param name="population">A population to retrieve an initial generation from.</param>
+        /// <returns name="generation">An initial generation in a population.</returns>
         [NodeCategory("Action")]
-        public static IList GetInitialGeneration(Population population, bool encoded = false)
+        public static Generation GetInitialGeneration(Population population)
         {
             if (population.GenerationsNumber > population.Generations.Count())
             {
                 throw new Exception("Initial generation data overwritten by population strategy. To see initial generation for the population please use GeneratePopulation node with strategy set to: TrackingGenerationStrategy.");
             }
-            if (encoded)
-            {
-                return population.Generations.First().Chromosomes.ToList();
-            }
-
-            IList generationIndividuals = new IList[population.MaxSize];
-            int generationIndividual = 0;
-            foreach (IChromosome populationChromosome in population.Generations.First().Chromosomes)
-            {
-                generationIndividuals[generationIndividual] = DecodeChromosome(populationChromosome);
-                generationIndividual++;
-            }
-            return generationIndividuals;
+            return population.Generations.First();
         }
 
-        /// <summary>
-        /// Retrieves individuals of a nth generation from a population.
-        /// </summary>
-        /// <param name="population">A population to retrieve nth generation individuals from.</param>
-        /// <param name="generation">A number of a generation to retrieve individuals for.</param>
-        /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
-        /// <returns name="individuals">
-        /// An individuals list of nth generation in a population.
-        /// </returns>
+        /// <summary>Retrieves an nth generation from a population.</summary>
+        /// <param name="population">A population to retrieve nth generation from.</param>
+        /// <param name="generation">A number of a generation to retrieve.</param>
+        /// <returns name="generation">An nth generation in a population</returns>
         [NodeCategory("Action")]
-        public static IList GetGeneration(Population population, int generation, bool encoded = false)
+        public static Generation GetGeneration(Population population, int generation)
         {
-            if ((generation < 0) || (generation > population.Generations.Count()))
+            foreach(Generation gen in population.Generations)
             {
-                throw new Exception("The given generation does not exist in the population.");
+                if(gen.Number == generation)
+                {
+                    return gen;
+                }
             }
-            if (encoded)
-            {
-                return population.Generations[generation].Chromosomes.ToList();
-            }
-
-            IList generationIndividuals = new IList[population.MaxSize];
-            int generationIndividual = 0;
-            foreach (IChromosome populationChromosome in population.Generations[generation].Chromosomes)
-            {
-                generationIndividuals[generationIndividual] = DecodeChromosome(populationChromosome);
-                generationIndividual++;
-            }
-            return generationIndividuals;
+            throw new Exception("The given generation does not exist in the population.");
         }
 
-        /// <summary>
-        /// Retrieves individuals of all generations in a population.
-        /// </summary>
-        /// <param name="population">A population to retrieve generations individuals from.</param>
-        /// <param name="bestChromosomesOnly">Whether only best chromosomes should be listed or all individuals in generations.</param>
-        /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
-        /// <returns name="members">
-        /// An individuals list of all generations in a population.
-        /// </returns>
+        /// <summary>Retrieves all generations from a population.</summary>
+        /// <param name="population">A population to retrieve generations from.</param>
+        /// <returns name="generations">A list of all generations in a population.</returns>
         [NodeCategory("Action")]
-        public static IList GetGenerations(Population population, bool bestChromosomesOnly = true, bool encoded = false)
+        public static IList<Generation> GetGenerations(Population population)
         {
-            List<object> generationIndividuals = new List<object>();
-            foreach (Generation generation in population.Generations)
-            {
-                if (!encoded)
-                {
-                    if (bestChromosomesOnly)
-                    {
-                        if (generation.BestChromosome != null)
-                        {
-                            generationIndividuals.Add(DecodeChromosome(generation.BestChromosome));
-                        }
-                        else
-                        {
-                            var mostCommon = generation.Chromosomes.GroupBy(i => i).OrderByDescending(c => c.Count()).Select(group => group.Key).First();
-                            generationIndividuals.Add(DecodeChromosome(mostCommon));
-                        }
-                    }
-                    else
-                    {
-                        List<object> collector = new List<object>();
-                        foreach (IChromosome populationChromosome in population.Generations[population.Generations.IndexOf(generation)].Chromosomes)
-                        {
-                            collector.Add(DecodeChromosome(populationChromosome));
-                        }
-                        generationIndividuals.Add(collector);
-                    }
-                }
-                else
-                {
-                    if (bestChromosomesOnly)
-                    {
-                        if (generation.BestChromosome != null)
-                        {
-                            generationIndividuals.Add(generation.BestChromosome);
-                        }
-                        else
-                        {
-                            var mostCommon = generation.Chromosomes.GroupBy(i => i).OrderByDescending(c => c.Count()).Select(group => group.Key).First();
-                            generationIndividuals.Add(mostCommon);
-                        }
-                    }
-                    else
-                    {
-                        generationIndividuals.Add(population.Generations[population.Generations.IndexOf(generation)].Chromosomes.ToList());
-                    }
-                }
-            }
-            return generationIndividuals;
+            return population.Generations;
         }
 
-        /// <summary>
-        /// Retrieves individuals of all the generations in a population, that have subsequently improved the fittness value.
-        /// </summary>
-        /// <param name="population">A population to retrieve generations individuals from.</param>
-        /// <param name="bestChromosomesOnly">Whether only best chromosomes should be listed or all individuals in progressive generations.</param>
-        /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to lists of components.</param>
-        /// <returns name="individuals">
-        /// An individuals list of all the generations in a population, that have subsequently improved the fittness value.
-        /// </returns>
+        /// <summary>Retrieves all the generations from a population, that have subsequently improved the fittness value.</summary>
+        /// <param name="population">A population to retrieve generations from.</param>
+        /// <returns name="generations">A list of all the generations in a population, that have subsequently improved the fittness value.</returns>
         [NodeCategory("Action")]
-        public static IList GetProgressiveGenerations(Population population, bool bestChromosomesOnly = true, bool encoded = false)
+        public static IList<Generation> GetProgressiveGenerations(Population population)
         {
-            List<object> generationIndividuals = new List<object>();
+            IList<Generation> generations = new List<Generation>();
 
-            int generations = 0;
-            double? bestFitness = Double.NegativeInfinity;
-            foreach (Generation generation in population.Generations)
-            {
-                if (generation.BestChromosome != null)
-                {
-                    if (generation.BestChromosome.Fitness > bestFitness)
-                    {
-                        bestFitness = generation.BestChromosome.Fitness;
-                        generations++;
-                    }
-                }
-                else if(generation.Number == population.GenerationsNumber)
-                {
-                    generations++;
-                }
-            }
-
-            bestFitness = Double.NegativeInfinity;
+            double? bestFitness = double.NegativeInfinity;
             foreach (Generation generation in population.Generations)
             {
                 if(generation.BestChromosome == null)
                 {
-                    if (generation.Number != population.GenerationsNumber)
-                    {
-                        continue;
-                    }
-                }
-                else
-                {
-                    if (generation.BestChromosome.Fitness <= bestFitness)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
-                if (!encoded)
+                if(generation.BestChromosome.Fitness > bestFitness)
                 {
-                    if (bestChromosomesOnly)
-                    {
-                        if (generation.BestChromosome != null)
-                        {
-                            generationIndividuals.Add(DecodeChromosome(generation.BestChromosome));
-                        }
-                        else
-                        {
-                            var mostCommon = generation.Chromosomes.GroupBy(i => i).OrderByDescending(c => c.Count()).Select(group => group.Key).First();
-                            generationIndividuals.Add(DecodeChromosome(mostCommon));
-                        }
-                    }
-                    else
-                    {
-                        List<object> collector = new List<object>();
-                        foreach (IChromosome populationChromosome in population.Generations[population.Generations.IndexOf(generation)].Chromosomes)
-                        {
-                            collector.Add(DecodeChromosome(populationChromosome));
-                        }
-                        generationIndividuals.Add(collector);
-                    }
-                }
-                else
-                {
-                    if (bestChromosomesOnly)
-                    {
-                        if (generation.BestChromosome != null)
-                        {
-                            generationIndividuals.Add(generation.BestChromosome);
-                        }
-                        else
-                        {
-                            var mostCommon = generation.Chromosomes.GroupBy(i => i).OrderByDescending(c => c.Count()).Select(group => group.Key).First();
-                            generationIndividuals.Add(mostCommon);
-                        }
-                    }
-                    else
-                    {
-                        generationIndividuals.Add(population.Generations[population.Generations.IndexOf(generation)].Chromosomes.ToList());
-                    }
-                }
-
-                if (generation.BestChromosome != null)
-                {
+                    generations.Add(generation);
                     bestFitness = generation.BestChromosome.Fitness;
                 }
             }
-            return generationIndividuals;
+            return generations;
         }
 
-        /// <summary>
-        /// Retreives a population processed by a genetic algorithm instance.
-        /// </summary>
+        /// <summary>Retreives a population processed by a genetic algorithm instance.</summary>
         /// <param name="algorithm">A genetic algorithm instance to retrieve a population from.</param>
-        /// <returns name="population">
-        /// A population processed by a genetic algorithm instance.
-        /// </returns>
+        /// <returns name="population">A population processed by a genetic algorithm instance.</returns>
         [NodeCategory("Action")]
         public static Population GetPopulation(DynamoGeneticAlgorithm algorithm)
         {
             return (Population) algorithm.Population;
         }
 
-        /// <summary>
-        /// Returns number of generations in a genetic algorithm instance.
-        /// </summary>
-        /// <param name="algorithm">A genetic algorithm instance.</param>
-        /// <returns name="generations">
-        /// Number of generations in a genetic algorithm instance.
-        /// </returns>
-        [NodeCategory("Query")]
-        public static int GenerationsNumber(DynamoGeneticAlgorithm algorithm)
+        /// <summary>Retrieves individuals from a generation.</summary>
+        /// <param name="generation">A generation to retrieve individuals from.</param>
+        /// <param name="bestChromosomesOnly">Whether only best chromosomes should be listed or all individuals in a generation.</param>
+        /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to numerical values.</param>
+        /// <returns name="chromosomes">An list of of individuals retrieved from a generation.</returns>
+        [NodeCategory("Action")]
+        public static object Chromosomes(Generation generation, bool bestChromosomesOnly = false, bool encoded = false)
         {
-            return algorithm.Population.GenerationsNumber;
+            if (bestChromosomesOnly)
+            {
+                return BestChromosome(generation, encoded);
+            }
+
+            if (encoded)
+            {
+                return generation.Chromosomes.ToList();
+            }
+            IList chromosomes = new IList[generation.Chromosomes.Count()];
+            int index = 0;
+            foreach (IChromosome chromosome in generation.Chromosomes)
+            {
+                chromosomes[index] = GeneticAlgorithms.Chromosomes.DecodeChromosome(chromosome);
+                index++;
+            }
+            return chromosomes;
         }
 
-        /// <summary>
-        /// Lists chromosome elements (genes) or, in case of a floating point chromosome, a floating point value.
-        /// </summary>
-        [IsVisibleInDynamoLibrary(false)]
-        public static object DecodeChromosome(IChromosome chromosome)
+        /// <summary>Retrieves unprocessed individuals from a generation.</summary>
+        /// <param name="generation">A generation to retrieve unprocessed individuals from.</param>
+        /// <returns name="chromosomes">An list of of unprocessed individuals retrieved from a generation.</returns>
+        [NodeCategory("Action")]
+        public static object ChromosomesWithNoFitness(Generation generation)
         {
-            if (chromosome is FloatingPointChromosome)
+            if (generation.BestChromosome == null)
             {
-                return ((FloatingPointChromosome)chromosome).ToFloatingPoints().ToList();
-            }
-            if (chromosome is OrderedChromosome)
-            {
-                List<int> geneValues = new List<int>();
-                foreach (Gene gene in ((OrderedChromosome)chromosome).GetGenes())
+                List<object> chromosomes = new List<object>();
+                foreach(IChromosome chromosome in generation.Chromosomes)
                 {
-                    geneValues.Add((int)gene.Value);
+                    chromosomes.Add(chromosome);
                 }
-                return geneValues;
+                return chromosomes;
             }
-            return null;
+            return new List<object>();
+        }
+
+        /// <summary>Retrieves the best individual in a generation.</summary>
+        /// <param name="generation">A generation to retrieve generations individuals from.</param>
+        /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to numerical values.</param>
+        /// <returns name="chromosome">The best individual in a generation.</returns>
+        /// <returns name="fitness">Fitness value for the best chromosome.</returns>
+        [NodeCategory("Action")]
+        [MultiReturn(new[] { "bestChromosome", "fitness" })]
+        public static Dictionary<string, object> BestChromosome(Generation generation, bool encoded = false)
+        {
+            object chromosome = null;
+            if (encoded)
+            {
+                chromosome = generation.BestChromosome;
+            }
+            else
+            {
+                chromosome = GeneticAlgorithms.Chromosomes.DecodeChromosome(generation.BestChromosome);
+            }
+
+            double? chromosomeFitness = null;
+            if (generation.BestChromosome != null)
+            {
+                chromosomeFitness = generation.BestChromosome.Fitness;
+            }
+
+            return new Dictionary<string, object>
+            {
+                { "bestChromosome", chromosome },
+                { "fitness", chromosomeFitness }
+            };
+        }
+
+        /// <summary>Returns number of generations in a genetic algorithm instance.</summary>
+        /// <param name="algorithm">A genetic algorithm instance.</param>
+        /// <returns name="generations">Number of generations in a genetic algorithm instance.</returns>
+        [NodeCategory("Query")]
+        public static int NumberOfGenerations(DynamoGeneticAlgorithm algorithm)
+        {
+            return NumberOfGenerations((Population) algorithm.Population);
+        }
+
+        /// <summary>Returns number of generations in a population.</summary>
+        /// <param name="population">A population.</param>
+        /// <returns name="generations">Number of generations in a population.</returns>
+        [NodeCategory("Query")]
+        public static int NumberOfGenerations(Population population)
+        {
+            return population.GenerationsNumber;
         }
     }
 }

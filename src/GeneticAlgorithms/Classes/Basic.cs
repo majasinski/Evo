@@ -13,6 +13,7 @@ using GeneticSharp.Domain.Terminations;
 
 using Autodesk.DesignScript.Runtime;
 using Dynamo.Graph.Nodes;
+using GeneticSharp.Domain.Reinsertions;
 
 namespace GeneticAlgorithms
 {
@@ -21,9 +22,7 @@ namespace GeneticAlgorithms
     /// </summary>
     public static class Basic
     {
-        /// <summary>
-        /// Creates a genetic algorithm instace.
-        /// </summary>
+        /// <summary>Creates a genetic algorithm instace.</summary>
         /// <param name="population">A population of initial candidate solutions to resolve.</param>
         /// <param name="selection">A selection instance returned by one of Selections nodes (default selection operator: Elite Selection).</param>
         /// <param name="crossover">A crossover instance returned by one of Crossovers nodes (default crossover operator: Uniform Crossover).</param>
@@ -32,9 +31,7 @@ namespace GeneticAlgorithms
         /// <param name="selectionSize">Minimum number of elements to be selected by a selection operator (if not specified, taken as a half of initial generation size).</param>
         /// <param name="crossoverProbability">Crossover rate.</param>
         /// <param name="mutationProbability">Mutation rate.</param>
-        /// <returns name="algorithm">
-        /// A genetic algorithm instance.
-        /// </returns>
+        /// <returns name="algorithm">A genetic algorithm instance.</returns>
         [NodeCategory("Create")]
         public static DynamoGeneticAlgorithm CreateGeneticAlgorithm(Population population,
             [DefaultArgument("Evo.DynamoGeneticAlgorithm.Default()")] object selection,
@@ -42,9 +39,24 @@ namespace GeneticAlgorithms
             [DefaultArgument("Evo.DynamoGeneticAlgorithm.Default()")] object mutation,
             [DefaultArgument("Evo.DynamoGeneticAlgorithm.Default()")] object termination,
             [DefaultArgument("Evo.DynamoGeneticAlgorithm.Default()")] int? selectionSize,
-            double crossoverProbability = 0.75,
-            double mutationProbability = 0.05)
+            double crossoverProbability = DynamoGeneticAlgorithm.DefaultCrossoverProbability,
+            double mutationProbability = DynamoGeneticAlgorithm.DefaultMutationProbability)
         {
+            IChromosome exemplaryChromome = population.CurrentGeneration.Chromosomes[0];
+            ChromosomeType chromosomeType = 0;
+            if (exemplaryChromome is BinaryChromosome)
+            {
+                chromosomeType = ((BinaryChromosome) exemplaryChromome).ChromosomeType;
+            }
+            else if (exemplaryChromome is CombinatorialChromosome)
+            {
+                chromosomeType = ((CombinatorialChromosome) exemplaryChromome).ChromosomeType;
+            }
+            else if (exemplaryChromome is DoubleChromosome)
+            {
+                chromosomeType = ((DoubleChromosome) exemplaryChromome).ChromosomeType;
+            }
+
             ISelection selectionMethod = null;
             if (selection == null)
             {
@@ -83,74 +95,106 @@ namespace GeneticAlgorithms
             {
                 if (crossover is AlternatingPositionCrossover)
                 {
-                    if (population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.CombinatorialChromosome)
                     {
-                        throw new CrossoverException("The Alternating-position Crossover (AP) can be only used with ordered chromosomes. The specified chromosomes have repeated genes.");
+                        throw new CrossoverException("The Alternating-position Crossover (AP) can be only used with combinatorial chromosomes. The specified individuals are not combinatorial chromosomes.");
                     }
                     crossoverMethod = crossover as AlternatingPositionCrossover;
                 }
                 else if (crossover is CutAndSpliceCrossover)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Cut and Splice Crossover (AP) can be only used with binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     crossoverMethod = crossover as CutAndSpliceCrossover;
                 }
                 else if (crossover is CycleCrossover)
                 {
-                    if (population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.CombinatorialChromosome)
                     {
-                        throw new CrossoverException("The Cycle Crossover (CX) can be only used with ordered chromosomes. The specified chromosomes have repeated genes.");
+                        throw new CrossoverException("The Cycle Crossover (CX) can be only used with combinatorial chromosomes. The specified individuals are not combinatorial chromosomes.");
                     }
                     crossoverMethod = crossover as CycleCrossover;
                 }
                 else if (crossover is OnePointCrossover)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The One-point Crossover can be only used with binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     crossoverMethod = crossover as OnePointCrossover;
                 }
                 else if (crossover is OrderBasedCrossover)
                 {
-                    if (population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.CombinatorialChromosome)
                     {
-                        throw new CrossoverException("The Order Based Crossover (OX2) can be only used with ordered chromosomes. The specified chromosomes have repeated genes.");
+                        throw new CrossoverException("The Order Based Crossover (OX2) can be only used with combinatorial chromosomes. The specified individuals are not combinatorial chromosomes.");
                     }
                     crossoverMethod = crossover as OrderBasedCrossover;
                 }
                 else if (crossover is OrderedCrossover)
                 {
-                    if (population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.CombinatorialChromosome)
                     {
-                        throw new CrossoverException("The Ordered Crossover (OX1) can be only used with ordered chromosomes. The specified chromosomes have repeated genes.");
+                        throw new CrossoverException("The Ordered Crossover (OX1) can be only used with combinatorial chromosomes. The specified individuals are not combinatorial chromosomes.");
                     }
                     crossoverMethod = crossover as OrderedCrossover;
                 }
                 else if (crossover is PartiallyMappedCrossover)
                 {
-                    if (population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.CombinatorialChromosome)
                     {
-                        throw new CrossoverException("The Partially-mapped Crossover (PMX) can be only used with ordered chromosomes. The specified chromosomes have repeated genes.");
+                        throw new CrossoverException("The Partially-mapped Crossover (PMX) can be only used with combinatorial chromosomes. The specified individuals are not combinatorial chromosomes.");
                     }
                     crossoverMethod = crossover as PartiallyMappedCrossover;
                 }
                 else if (crossover is PositionBasedCrossover)
                 {
-                    if (population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.CombinatorialChromosome)
                     {
-                        throw new CrossoverException("The Position Based Crossover (POS) can be only used with ordered chromosomes. The specified chromosomes have repeated genes.");
+                        throw new CrossoverException("The Position Based Crossover (POS) can be only used with combinatorial chromosomes. The specified individuals are not combinatorial chromosomes.");
                     }
                     crossoverMethod = crossover as PositionBasedCrossover;
                 }
+                else if (crossover is SimulatedBinaryCrossover)
+                {
+                    if (chromosomeType != ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Simulated Binary Crossover (SBX) can be only used with double chromosomes. The specified individuals are not double chromosomes.");
+                    }
+                    crossoverMethod = crossover as SimulatedBinaryCrossover;
+                }
                 else if (crossover is ThreeParentCrossover)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Three-parent Crossover can be only used with binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     crossoverMethod = crossover as ThreeParentCrossover;
                 }
                 else if (crossover is TwoPointCrossover)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Two-point Crossover can be only used with binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     crossoverMethod = crossover as TwoPointCrossover;
                 }
                 else if (crossover is UniformCrossover)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Uniform Crossover can be only used with binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     crossoverMethod = crossover as UniformCrossover;
                 }
                 else if (crossover is VotingRecombinationCrossover)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Voting Recombination Crossover (VR) can be only used with binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     crossoverMethod = crossover as VotingRecombinationCrossover;
                 }
                 else
@@ -168,37 +212,73 @@ namespace GeneticAlgorithms
             {
                 if (mutation is DisplacementMutation)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Displacement Mutation can be only used on binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     mutationMethod = mutation as DisplacementMutation;
                 }
                 else if (mutation is FlipBitMutation)
                 {
-                    if (!population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.BinaryChromosome)
                     {
-                        throw new CrossoverException("The Flip Bit Mutation can be only used on floating point chromosomes. The specified chromosomes are order-based.");
+                        throw new CrossoverException("The Flip Bit Mutation can be only used on binary chromosomes. The specified individuals are not binary chromosomes.");
                     }
                     mutationMethod = mutation as FlipBitMutation;
                 }
+                else if (mutation is GaussianMutation)
+                {
+                    if (chromosomeType != ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Gaussian Mutation can be only used on double chromosomes. The specified individuals are not double chromosomes.");
+                    }
+                    mutationMethod = mutation as GaussianMutation;
+                }
                 else if (mutation is InsertionMutation)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Displacement Mutation can be only used on binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     mutationMethod = mutation as InsertionMutation;
                 }
                 else if (mutation is PartialShuffleMutation)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Displacement Mutation (PSM) can be only used on binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     mutationMethod = mutation as PartialShuffleMutation;
+                }
+                else if (mutation is PolynomialMutation)
+                {
+                    if (chromosomeType != ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Polynomial Mutation can be only used on double chromosomes. The specified individuals are not double chromosomes.");
+                    }
+                    mutationMethod = mutation as PolynomialMutation;
                 }
                 else if (mutation is ReverseSequenceMutation)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Displacement Mutation (RSM) can be only used on binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     mutationMethod = mutation as ReverseSequenceMutation;
                 }
                 else if (mutation is TworsMutation)
                 {
+                    if (chromosomeType == ChromosomeType.DoubleChromosome)
+                    {
+                        throw new CrossoverException("The Displacement Mutation can be only used on binary and combinatorial chromosomes. The specified individuals are double chromosomes.");
+                    }
                     mutationMethod = mutation as TworsMutation;
                 }
                 else if (mutation is UniformMutation)
                 {
-                    if (!population.CurrentGeneration.Chromosomes.AnyHasRepeatedGene())
+                    if (chromosomeType != ChromosomeType.BinaryChromosome)
                     {
-                        throw new CrossoverException("The Uniform Mutation can be only used on floating point chromosomes. The specified chromosomes are order-based.");
+                        throw new CrossoverException("The Uniform Mutation can be only used on binary chromosomes. The specified individuals are not binary chromosomes.");
                     }
                     mutationMethod = mutation as UniformMutation;
                 }
@@ -207,6 +287,8 @@ namespace GeneticAlgorithms
                     throw new CrossoverException("Invalid mutation input. A valid object returned by a node of Mutations category should be used.");
                 }
             }
+
+            ElitistReinsertion reinsertionMethod = new ElitistReinsertion();
 
             ITermination terminationMethod = null;
             if (termination == null)
@@ -258,59 +340,55 @@ namespace GeneticAlgorithms
                 throw new CrossoverException("Selection size cannot be greater than population size.");
             }
 
-            var algorithm = new DynamoGeneticAlgorithm(population, selectionMethod, crossoverMethod, mutationMethod)
+            var algorithm = new DynamoGeneticAlgorithm(population, selectionMethod, crossoverMethod, mutationMethod, reinsertionMethod, terminationMethod)
             {
-                SelectionSize = (int) selectionSize,
-                Termination = terminationMethod,
-                CrossoverProbability = (float) crossoverProbability,
-                MutationProbability = (float) mutationProbability,
+                SelectionSize = (int)selectionSize,
+                CrossoverProbability = (float)crossoverProbability,
+                MutationProbability = (float)mutationProbability,
+
                 Timer = Stopwatch.StartNew()
             };
+            algorithm.Timer.Start();
             return algorithm;
         }
 
-        /// <summary>
-        /// Creates a new generation in the population of a genetic algorithm. Performing one cycle of selection, crossover and mutation in the most recent generation.
-        /// </summary>
+        /// <summary>Assigns fitness function value to parents, if not assigned yet, and performs one cycle of selection, crossover and mutation in the most recent generation.</summary>
         /// <param name="algorithm">A genetic algorithm instance to evolve in.</param>
         /// <param name="fitness">A list of fitness function results for input generation.</param>
-        /// <returns name="algorithm">
-        /// An updated genetic algorithm instance.
-        /// </returns>
+        /// <returns name="parents">Parents selected for crossover.</returns>
+        /// <returns name="offsprings">Offsprings produced by crossover and mutation.</returns>
         [NodeCategory("Action")]
-        public static DynamoGeneticAlgorithm EvolveGeneration(DynamoGeneticAlgorithm algorithm, List<double> fitness)
+        [MultiReturn(new[] { "parents", "offsprings" })]
+        public static Dictionary<string, List<IChromosome>> ProduceOffsprings(DynamoGeneticAlgorithm algorithm, List<double?> fitness)
         {
-            if (algorithm.State != GeneticAlgorithmState.TerminationReached)
-            {
-                algorithm.Start(fitness);
-            }
+            return algorithm.ProduceOffsprings(fitness);
+        }
+
+        /// <summary>Assigns fitness function value to offsprings and registers new generation in a population.</summary>
+        /// <param name="algorithm">A genetic algorithm instance to evolve in.</param>
+        /// <param name="parents">Parents obtained form the ProduceOffsprings node.</param>
+        /// <param name="offsprings">Offsprings obtained form the ProduceOffsprings node.</param>
+        /// <param name="offspringsFitness">A list of fitness function results for offsprings.</param>
+        /// <returns name="algorithm">A genetic algorithm instance supplemented with a new generation.</returns>
+        [NodeCategory("Action")]
+        public static DynamoGeneticAlgorithm ProduceNewGeneration(DynamoGeneticAlgorithm algorithm, List<object> parents, List<object> offsprings, List<double> offspringsFitness)
+        {
+            algorithm.ProduceNewGeneration(parents, offsprings, offspringsFitness);
             return algorithm;
         }
 
-        /// <summary>
-        /// Checks for termination of a genetic algorithm instance.
-        /// </summary>
+        /// <summary>Checks for termination of a genetic algorithm instance. </summary>
         /// <param name="algorithm">A genetic algorithm instance.</param>
-        /// <returns name="finished">
-        /// Whether genetic algorithm termination conditions are met.
-        /// </returns>
+        /// <returns name="finished">Whether genetic algorithm termination conditions are met.</returns>
         [NodeCategory("Query")]
         public static bool HasFinished(DynamoGeneticAlgorithm algorithm)
         {
-            if (algorithm.State == GeneticAlgorithmState.TerminationReached)
-            {
-                return true;
-            }
-            return false;
+            return algorithm.State == GeneticAlgorithmState.TerminationReached;
         }
 
-        /// <summary>
-        /// Returns total processing time of a genetic algorithm instance (in seconds).
-        /// </summary>
+        /// <summary>Returns total processing time of a genetic algorithm instance (in seconds).</summary>
         /// <param name="algorithm">A genetic algorithm instance.</param>
-        /// <returns name="seconds">
-        /// Total processing time of a genetic algorithm instance (in seconds).
-        /// </returns>
+        /// <returns name="seconds">Total processing time of a genetic algorithm instance (in seconds).</returns>
         [NodeCategory("Query")]
         public static double TimeEvolving(DynamoGeneticAlgorithm algorithm)
         {
