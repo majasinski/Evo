@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 using Evo;
 using GeneticSharp.Domain.Crossovers;
 
+using Autodesk.DesignScript.Runtime;
 using Dynamo.Graph.Nodes;
 
 namespace GeneticAlgorithms
@@ -133,7 +136,7 @@ namespace GeneticAlgorithms
             {
                 throw new CrossoverException("Invalid value of inhertitance probability. The given value should be in range between 0.0 and 1.0.");
             }
-            return new UniformCrossover((float) mixProbability);
+            return new UniformCrossover((float)mixProbability);
         }
 
         /// <summary>Defines a crossover instance: Voting Recombination Crossover (VR). Designed for binary and combinatorial chromosomes.</summary>

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
+using Evo;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Randomizations;
-
-using Autodesk.DesignScript.Runtime;
 using GeneticSharp.Infrastructure.Framework.Commons;
 using GeneticSharp.Infrastructure.Framework.Texts;
+
+using Autodesk.DesignScript.Runtime;
+using Dynamo.Graph.Nodes;
 
 namespace Evo
 {
@@ -186,7 +189,9 @@ namespace Evo
     [SupressImportIntoVM]
     public sealed class DoubleChromosome : IChromosome
     {
+        /// <summary>List of minimum values.</summary>
         public readonly double[] MinValues;
+        /// <summary>List of maximum values.</summary>
         public readonly double[] MaxValues;
         private int ChromosomeLength;
         private Gene[] Genes;

@@ -2,18 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 using Evo;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Crossovers;
 using GeneticSharp.Domain.Mutations;
 using GeneticSharp.Domain.Populations;
+using GeneticSharp.Domain.Reinsertions;
 using GeneticSharp.Domain.Selections;
 using GeneticSharp.Domain.Terminations;
 
 using Autodesk.DesignScript.Runtime;
 using Dynamo.Graph.Nodes;
-using GeneticSharp.Domain.Reinsertions;
 
 namespace GeneticAlgorithms
 {
@@ -327,24 +328,24 @@ namespace GeneticAlgorithms
                 }
             }
 
-            if(selectionSize == null)
+            if (selectionSize == null)
             {
                 selectionSize = (int) Math.Round(0.5 * population.MaxSize);
             }
-            else if(!(selectionSize is int))
+            else if (!(selectionSize is int))
             {
                 throw new CrossoverException("Defined selection size is not an integer.");
             }
-            else if(selectionSize > population.MaxSize)
+            else if (selectionSize > population.MaxSize)
             {
                 throw new CrossoverException("Selection size cannot be greater than population size.");
             }
 
             var algorithm = new DynamoGeneticAlgorithm(population, selectionMethod, crossoverMethod, mutationMethod, reinsertionMethod, terminationMethod)
             {
-                SelectionSize = (int)selectionSize,
-                CrossoverProbability = (float)crossoverProbability,
-                MutationProbability = (float)mutationProbability,
+                SelectionSize = (int) selectionSize,
+                CrossoverProbability = (float) crossoverProbability,
+                MutationProbability = (float) mutationProbability,
 
                 Timer = Stopwatch.StartNew()
             };

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using Evo;
@@ -210,7 +211,7 @@ namespace GeneticAlgorithms
         /// <summary>Retrieves the best individual in a generation.</summary>
         /// <param name="generation">A generation to retrieve generations individuals from.</param>
         /// <param name="encoded">Whether chromosomes should be listed as original string representations or converted to numerical values.</param>
-        /// <returns name="chromosome">The best individual in a generation.</returns>
+        /// <returns name="bestChromosome">The best individual in a generation.</returns>
         /// <returns name="fitness">Fitness value for the best chromosome.</returns>
         [NodeCategory("Action")]
         [MultiReturn(new[] { "bestChromosome", "fitness" })]

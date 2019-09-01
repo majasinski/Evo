@@ -1,12 +1,16 @@
-﻿using Autodesk.DesignScript.Runtime;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+
+using Evo;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Mutations;
 using GeneticSharp.Domain.Randomizations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Autodesk.DesignScript.Runtime;
+using Dynamo.Graph.Nodes;
 
 namespace Evo
 {

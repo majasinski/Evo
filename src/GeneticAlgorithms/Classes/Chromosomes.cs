@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using Evo;
@@ -8,9 +9,8 @@ using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Randomizations;
 using GeneticSharp.Infrastructure.Framework.Commons;
 
-using Dynamo.Graph.Nodes;
-using GeneticSharp.Domain.Populations;
 using Autodesk.DesignScript.Runtime;
+using Dynamo.Graph.Nodes;
 
 namespace GeneticAlgorithms
 {
@@ -172,12 +172,12 @@ namespace GeneticAlgorithms
         {
             if (chromosome is BinaryChromosome)
             {
-                return ((BinaryChromosome) chromosome).ToFloatingPoints().ToList();
+                return ((BinaryChromosome)chromosome).ToFloatingPoints().ToList();
             }
             if (chromosome is CombinatorialChromosome)
             {
                 List<int> geneValues = new List<int>();
-                foreach (Gene gene in ((CombinatorialChromosome) chromosome).GetGenes())
+                foreach (Gene gene in ((CombinatorialChromosome)chromosome).GetGenes())
                 {
                     geneValues.Add((int)gene.Value);
                 }
@@ -186,9 +186,9 @@ namespace GeneticAlgorithms
             if (chromosome is DoubleChromosome)
             {
                 List<double> geneValues = new List<double>();
-                foreach (Gene gene in ((DoubleChromosome) chromosome).GetGenes())
+                foreach (Gene gene in ((DoubleChromosome)chromosome).GetGenes())
                 {
-                    geneValues.Add((double) gene.Value);
+                    geneValues.Add((double)gene.Value);
                 }
                 return geneValues;
             }
@@ -204,15 +204,15 @@ namespace GeneticAlgorithms
             List<object> genes = new List<object>();
             if (chromosome is BinaryChromosome)
             {
-                foreach (Gene gene in ((BinaryChromosome) chromosome).GetGenes())
+                foreach (Gene gene in ((BinaryChromosome)chromosome).GetGenes())
                 {
-                    genes.Add((int) gene.Value);
+                    genes.Add((int)gene.Value);
                 }
                 return genes;
             }
             if (chromosome is CombinatorialChromosome)
             {
-                foreach (Gene gene in ((CombinatorialChromosome) chromosome).GetGenes())
+                foreach (Gene gene in ((CombinatorialChromosome)chromosome).GetGenes())
                 {
                     genes.Add((int)gene.Value);
                 }
@@ -220,7 +220,7 @@ namespace GeneticAlgorithms
             }
             if (chromosome is DoubleChromosome)
             {
-                foreach (Gene gene in ((DoubleChromosome) chromosome).GetGenes())
+                foreach (Gene gene in ((DoubleChromosome)chromosome).GetGenes())
                 {
                     genes.Add((double)gene.Value);
                 }
@@ -237,15 +237,15 @@ namespace GeneticAlgorithms
         {
             if (chromosome is BinaryChromosome)
             {
-                return ((BinaryChromosome) chromosome).Fitness;
+                return ((BinaryChromosome)chromosome).Fitness;
             }
             if (chromosome is CombinatorialChromosome)
             {
-                return ((CombinatorialChromosome) chromosome).Fitness;
+                return ((CombinatorialChromosome)chromosome).Fitness;
             }
             if (chromosome is DoubleChromosome)
             {
-                return ((DoubleChromosome) chromosome).Fitness;
+                return ((DoubleChromosome)chromosome).Fitness;
             }
             return null;
         }
